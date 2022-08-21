@@ -149,7 +149,7 @@ const Home: NextPage = () => {
             <div className="text-xl w-fit flex flex-col md:flex-col gap-1 text-zinc-400 items-center justify-center">
               <p className="block md:inline w-fit">지금 지원하면</p>
               <p className="block md:inline w-fit">기대 상금</p>
-              <div className="flex flex-row gap-1 text-5xl text-zinc-800">
+              <div className="flex flex-row gap-1 text-5xl font-medium text-zinc-800">
                 <p className="text-3xl self-center">₩</p>
                 <AnimatingNumber
                   number={Math.floor((24 / team) * 10000000)}
