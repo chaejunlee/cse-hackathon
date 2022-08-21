@@ -81,7 +81,7 @@ function CurrentlyEnrolledPeople(): JSX.Element {
 
 function ApplyButton(): JSX.Element {
   return (
-    <div className="fixed flex justify-center left-10 right-10 bottom-10 animate-bounce">
+    <div className="fixed flex justify-center left-10 right-10 bottom-10">
       <Link href="https://naver.com">
         <a className="flex justify-center w-full max-w-4xl py-6 text-3xl font-bold text-white transition-colors duration-300 ease-in-out shadow-2xl cursor-pointer bg-amber-400 rounded-xl hover:bg-amber-600 hover:text-zinc-300">
           지원하기
@@ -105,15 +105,15 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header className="flex flex-col max-w-4xl px-4 pt-10 mx-auto md:items-end md:flex-row">
-        <h1 className="text-4xl font-bold text-blue-400 drop-shadow-md sm:text-4xl grow">
+      <header className="flex flex-col max-w-4xl px-4 pt-4 md:pt-10 mx-auto md:items-end md:flex-row">
+        <h1 className="text-2xl font-bold text-blue-400 drop-shadow-md sm:text-4xl grow underline underline-offset-2">
           2022 <span className="block">경북대학교 컴퓨터학부</span>
           <span className="block font-mono">HACKERTHON</span>
         </h1>
         <div className="flex flex-col self-end gap-2 w-fit">
           <i className="text-gray-300">Sponsored by</i>
           <Link href="https://ejn.gg/kr/">
-            <a>
+            <a className="w-16 md:w-24 self-end">
               <Image src="/ejn.png" alt="ejn logo" width="96px" height="25px" />
             </a>
           </Link>
@@ -130,11 +130,20 @@ const Home: NextPage = () => {
               <CurrentlyEnrolledPeople />
             </div>
           </div>
-          <div className="pt-8 mx-auto w-fit text-zinc-200">
-            <div className="text-3xl w-fit flex flex-row gap-2">
-              지금 지원하면 기대 상금{" "}
-              <AnimatingNumber number={Math.floor((24 / team) * 10000000)} />{" "}
-              원!!!
+          <div className="pt-8 mx-auto w-fit text-zinc-200 flex flex-col justify-center items-center gap-2">
+            <div className="text-3xl w-fit flex flex-col md:flex-row gap-2 items-center justify-center">
+              <p className="block md:inline w-fit">지금 지원하면</p>
+              <p className="block md:inline w-fit">기대 상금</p>
+              <div className="flex flex-row gap-2">
+                <AnimatingNumber number={Math.floor((24 / team) * 10000000)} />{" "}
+                원!!!
+              </div>
+            </div>
+            <div className="text-zinc-700 flex flex-col md:flex-row gap-2 items-center justify-center">
+              <p className="block md:inline w-fit">기대 상금 공식</p>
+              <p className="block md:inline w-fit">
+                (시상 팀 수) / (지원 팀 수) * (전체 상금)
+              </p>
             </div>
           </div>
         </section>
