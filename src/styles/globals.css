@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  @apply h-full bg-[rgb(13,20,39)];
+}
+
 body {
-  @apply bg-zinc-100 h-[100%];
+  @apply h-full;
+}
+
+#__next {
+  @apply bg-gradient-to-br from-[rgb(114,72,91)]  via-[#0D163A] to-[rgb(13,20,39)] h-[100%] bg-no-repeat;
 }
