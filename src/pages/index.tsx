@@ -88,15 +88,11 @@ function ApplyButton(): JSX.Element {
 }
 
 const Home: NextPage = () => {
-  const { isLoading, error, data } = useQuery<teamDataProps>(["getData"], () =>
+  const { isLoading, data } = useQuery<teamDataProps>(["getData"], () =>
     axios.get("api/status").then((res) => {
       return res.data;
     })
   );
-
-  if (error) {
-    return <div>에러가 발생했습니다.</div>;
-  }
 
   return (
     <>
@@ -151,7 +147,7 @@ const Home: NextPage = () => {
             <div className="flex flex-col items-center justify-center gap-1 italic md:flex-row text-zinc-300">
               <p className="block md:inline w-fit">기대 상금 공식</p>
               <p className="block md:inline w-fit font-extralight">
-                (시상 팀 수, 24팀) / (지원 팀 수) * (전체 상금, 1천만원)
+                (지원 팀 수) / (시상 팀 수, 24팀) * (전체 상금, 1천만원)
               </p>
             </div>
           </div>
