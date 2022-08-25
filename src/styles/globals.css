@@ -3,13 +3,9 @@
 @tailwind utilities;
 
 html {
-  @apply h-full bg-[rgb(13,20,39)];
+  @apply bg-[rgb(13,22,58)];
 }
 
 body {
-  @apply h-full;
-}
-
-#__next {
-  @apply bg-gradient-to-b from-[rgb(114,72,91)]  via-[#0D163A] to-[rgb(13,20,39)] h-[100%] bg-no-repeat;
+  @apply h-screen bg-fixed bg-center bg-gradient-to-br from-[hsl(333,23%,36%)]  via-[hsl(228,63%,14%)] to-[hsl(224,50%,10%)] bg-no-repeat;
 }

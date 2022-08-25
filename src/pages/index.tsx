@@ -6,6 +6,7 @@ import { clsx } from "clsx";
 import Header from "../components/header";
 import { useQuery } from "react-query";
 import axios from "axios";
+import Button from "../components/button";
 
 interface teamDataProps {
   team: number;
@@ -71,18 +72,6 @@ function CurrentlyEnrolledPeople({
         <AnimatingNumber number={applicant} speed={8} />
       </div>
       <p className="self-center text-3xl text-zinc-300">명</p>
-    </div>
-  );
-}
-
-function ApplyButton(): JSX.Element {
-  return (
-    <div className="fixed flex justify-center left-10 right-10 bottom-10">
-      <Link href="/apply">
-        <a className="flex justify-center w-full max-w-4xl py-4 text-xl font-bold text-white transition-colors duration-300 ease-in-out bg-yellow-400 rounded-md shadow-2xl cursor-pointer md:py-4 md:text-3xl hover:bg-yellow-600 hover:text-zinc-300 animate-bounce">
-          지원하기
-        </a>
-      </Link>
     </div>
   );
 }
@@ -153,7 +142,7 @@ const Home: NextPage = () => {
           </div>
         </section>
       </main>
-      <ApplyButton />
+      <Button>지원하기</Button>
     </>
   );
 };

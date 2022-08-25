@@ -5,6 +5,7 @@ import { useState } from "react";
 import clsx from "clsx";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 interface memberProps {
   name: string;
@@ -113,6 +114,7 @@ const Apply = () => {
   const { register, handleSubmit } = useForm<formProps>({ mode: "onSubmit" });
   const [numOfTeammates, setNumOfTeammates] = useState<number>(1);
   const [animateRef] = useAutoAnimate<HTMLDivElement>();
+  const router = useRouter();
   const onSubmit: SubmitHandler<formProps> = (data) => {
     const formattedData = {
       team: data.teamName,
@@ -129,10 +131,10 @@ const Apply = () => {
         { ...data?.member4 },
       ].filter((_, index) => index <= numOfTeammates - 1),
     };
-    console.log(formattedData);
-    axios.post("/api/apply", formattedData).then((res) => {
-      console.log(res);
-    });
+    axios
+      .post("/api/apply", formattedData)
+      .then(() => router.push("/success"))
+      .catch(() => router.push("/error"));
   };
   return (
     <>
@@ -147,7 +149,7 @@ const Apply = () => {
 
       <Header />
 
-      <main className="container flex flex-col items-center justify-center max-w-2xl px-2 pt-12 mx-auto pb-36">
+      <main className="container flex flex-col items-center justify-center max-w-2xl px-2 pt-12 pb-8 mx-auto">
         <form
           className="flex flex-col w-full max-w-lg gap-4"
           onSubmit={handleSubmit(onSubmit)}
@@ -252,7 +254,7 @@ const Apply = () => {
               />
             </div>
           </div>
-          {animateRef ? (
+          {animateRef && numOfTeammates > 2 ? (
             <div ref={animateRef} className="flex flex-col gap-4">
               {Array.from(Array(numOfTeammates)).map((_, index) => {
                 return (
@@ -283,7 +285,7 @@ const Apply = () => {
               );
             })
           )}
-          <button className="flex justify-center w-full max-w-4xl py-4 text-xl font-bold text-white transition-colors duration-300 ease-in-out bg-yellow-400 rounded-md shadow-2xl cursor-pointer md:py-4 md:text-3xl hover:bg-yellow-600 hover:text-zinc-300">
+          <button className="flex justify-center w-full max-w-4xl py-4 text-xl font-bold text-black transition-colors duration-300 ease-in-out bg-yellow-400 rounded-md shadow-2xl cursor-pointer md:py-4 md:text-3xl hover:bg-yellow-600 hover:text-zinc-800">
             지원하기
           </button>
         </form>
