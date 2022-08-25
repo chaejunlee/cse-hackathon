@@ -1,13 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import React, {
-  createContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useState } from "react";
 import { clsx } from "clsx";
 import Header from "../components/header";
 import { useQuery } from "react-query";
@@ -95,14 +89,10 @@ function ApplyButton(): JSX.Element {
 
 const Home: NextPage = () => {
   const { isLoading, error, data } = useQuery<teamDataProps>(["getData"], () =>
-    axios.get(process.env.NEXT_PUBLIC_DB_URL + "/status").then((res) => {
+    axios.get("api/status").then((res) => {
       return res.data;
     })
   );
-
-  if (isLoading) {
-    return <div>로딩중...</div>;
-  }
 
   if (error) {
     return <div>에러가 발생했습니다.</div>;
@@ -129,8 +119,12 @@ const Home: NextPage = () => {
             </h2>
             <div className="flex flex-col gap-2 px-4 mx-auto md:flex-row">
               <div className="flex flex-col items-center gap-4 text-xl font-medium text-zinc-300 grow">
-                <CurrentlyEnrolledTeam team={data?.team || 0} />
-                <CurrentlyEnrolledPeople applicant={data?.applicant || 0} />
+                <CurrentlyEnrolledTeam
+                  team={isLoading ? -1 : data?.team || 0}
+                />
+                <CurrentlyEnrolledPeople
+                  applicant={isLoading ? -1 : data?.applicant || 0}
+                />
               </div>
             </div>
           </div>
@@ -146,7 +140,10 @@ const Home: NextPage = () => {
               <p className="self-center text-3xl">₩</p>
               <AnimatingNumber
                 number={Math.floor(
-                  (24 / (typeof data === "undefined" ? 1 : data.team)) * 1000000
+                  (isLoading
+                    ? -1
+                    : (typeof data === "undefined" ? 1 : data.team) / 24) *
+                    10000000
                 )}
                 speed={2}
               />
