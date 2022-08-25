@@ -30,75 +30,75 @@ const TeammateForm = ({
 }): JSX.Element => {
   return (
     <>
-      <div className="flex flex-col gap-4 px-3 py-3 bg-white rounded-md">
+      <div className="flex flex-col gap-4 px-3 py-3 rounded-md bg-white/50 backdrop-blur-sm">
         <div>
-          <h3 className="flex items-center gap-1 text-xl font-semibold text-zinc-600">
+          <h3 className="flex items-center gap-1 text-xl font-semibold text-zinc-800">
             팀원 {numOfTeammates}
           </h3>
         </div>
         <div>
-          <label htmlFor="teamName" className="text-zinc-600">
+          <label htmlFor="teamName" className="text-zinc-800">
             이름<span className="text-red-500">*</span>
           </label>
           {numOfTeammates === 1 && (
             <input
               placeholder="팀원의 이름을 입력하세요."
-              className="block w-full p-2 mt-1 border rounded-md shadow-md outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
+              className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
               {...register("member1.name")}
             />
           )}
           {numOfTeammates === 2 && (
             <input
               placeholder="팀원의 이름을 입력하세요."
-              className="block w-full p-2 mt-1 border rounded-md shadow-md outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
+              className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
               {...register("member2.name")}
             />
           )}
           {numOfTeammates === 3 && (
             <input
               placeholder="팀원의 이름을 입력하세요."
-              className="block w-full p-2 mt-1 border rounded-md shadow-md outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
+              className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
               {...register("member3.name")}
             />
           )}
           {numOfTeammates === 4 && (
             <input
               placeholder="팀원의 이름을 입력하세요."
-              className="block w-full p-2 mt-1 border rounded-md shadow-md outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
+              className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
               {...register("member4.name")}
             />
           )}
         </div>
 
         <div>
-          <label htmlFor="teamName" className="text-zinc-600">
+          <label htmlFor="teamName" className="text-zinc-800">
             학번<span className="text-red-500">*</span>
           </label>
           {numOfTeammates === 1 && (
             <input
               placeholder="팀장의 학번을 입력하세요."
-              className="block w-full p-2 mt-1 border rounded-md shadow-md outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
+              className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
               {...register("member1.student_number")}
             />
           )}
           {numOfTeammates === 2 && (
             <input
               placeholder="팀장의 학번을 입력하세요."
-              className="block w-full p-2 mt-1 border rounded-md shadow-md outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
+              className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
               {...register("member2.student_number")}
             />
           )}
           {numOfTeammates === 3 && (
             <input
               placeholder="팀장의 학번을 입력하세요."
-              className="block w-full p-2 mt-1 border rounded-md shadow-md outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
+              className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
               {...register("member3.student_number")}
             />
           )}
           {numOfTeammates === 4 && (
             <input
               placeholder="팀장의 학번을 입력하세요."
-              className="block w-full p-2 mt-1 border rounded-md shadow-md outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
+              className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
               {...register("member4.student_number")}
             />
           )}
@@ -126,30 +126,30 @@ const Apply = () => {
 
       <Header />
 
-      <main className="container flex flex-col items-center justify-center max-w-2xl pt-12 mx-auto pb-36">
+      <main className="container flex flex-col items-center justify-center max-w-2xl px-2 pt-12 mx-auto pb-36">
         <form
           className="flex flex-col w-full max-w-lg gap-4"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div className="flex flex-col gap-4 px-3 py-3 bg-white rounded-md">
+          <div className="flex flex-col gap-4 px-3 py-3 rounded-md bg-white/50 backdrop-blur-sm">
             <div>
               <label htmlFor="teamName">
-                <h3 className="flex items-center gap-1 text-xl font-semibold text-zinc-600">
+                <h3 className="flex items-center gap-1 text-xl font-semibold text-zinc-800">
                   팀명<span className="text-sm text-red-500">*</span>
                 </h3>
               </label>
               <input
                 placeholder="팀의 이름을 입력하세요."
-                className="block w-full p-2 mt-1 border rounded-md shadow-md outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
+                className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
                 {...register("teamName")}
               />
             </div>
           </div>
-          <div className="flex flex-col gap-4 px-3 py-3 bg-white rounded-md">
+          <div className="flex flex-col gap-4 px-3 py-3 rounded-md bg-white/50 backdrop-blur-sm">
             <div>
               <label
                 htmlFor="teamName"
-                className="text-xl font-semibold text-zinc-600"
+                className="text-xl font-semibold text-zinc-800"
               >
                 참가 인원 수<span className="text-red-500">*</span>:{" "}
                 <b>{numOfTeammates}명</b>
@@ -185,52 +185,52 @@ const Apply = () => {
             </div>{" "}
           </div>
 
-          <div className="flex flex-col gap-4 px-3 py-3 bg-white rounded-md">
+          <div className="flex flex-col gap-4 px-3 py-3 rounded-md bg-white/50 backdrop-blur-sm">
             <div>
-              <h3 className="flex items-center gap-1 text-xl font-semibold text-zinc-600">
+              <h3 className="flex items-center gap-1 text-xl font-semibold text-zinc-800">
                 팀장<span className="text-sm text-red-500">(필수)</span>
               </h3>
             </div>
             <div>
-              <label htmlFor="teamName" className="text-zinc-600">
+              <label htmlFor="teamName" className="text-zinc-800">
                 이름<span className="text-red-500">*</span>
               </label>
               <input
                 placeholder="팀장의 이름을 입력하세요. (컴퓨터학부 또는 연계/융합 전공 재학생이어야 함)"
-                className="block w-full p-2 mt-1 border rounded-md shadow-md outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
+                className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
                 {...register("leader.name")}
               />
             </div>
 
             <div>
-              <label htmlFor="teamName" className="text-zinc-600">
+              <label htmlFor="teamName" className="text-zinc-800">
                 학번<span className="text-red-500">*</span>
               </label>
               <input
                 placeholder="팀장의 학번을 입력하세요."
-                className="block w-full p-2 mt-1 border rounded-md shadow-md outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
+                className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
                 {...register("leader.student_number")}
               />
             </div>
 
             <div>
-              <label htmlFor="teamName" className="text-zinc-600">
+              <label htmlFor="teamName" className="text-zinc-800">
                 전화번호<span className="text-red-500">*</span>
               </label>
               <input
                 placeholder="팀장의 전화번호를 입력하세요."
-                className="block w-full p-2 mt-1 border rounded-md shadow-md outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
+                className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
                 {...register("leader.phone_number")}
               />
             </div>
 
             <div>
-              <label htmlFor="teamName" className="text-zinc-600">
+              <label htmlFor="teamName" className="text-zinc-800">
                 깃헙 링크<span className="text-red-500">*</span>
               </label>
               <input
                 placeholder="팀장의 깃헙 링크를 입력하세요."
-                className="block w-full p-2 mt-1 border rounded-md shadow-md outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
+                className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
                 {...register("leader.github")}
               />
             </div>

@@ -12,11 +12,18 @@ const Header = () => {
             컴퓨터학부 해커톤
           </div>
         </h1>
-        <div className="flex flex-col self-end gap-2 w-fit">
-          <i className="text-xs text-gray-400 md:text-base">Sponsored by</i>
-          <Link href="https://ejn.gg/kr/">
-            <a className="self-end w-16 md:w-24">
-              <Image src="/ejn.png" alt="ejn logo" width="96px" height="25px" />
+        <div className="flex flex-col justify-end gap-2 w-fit">
+          <i className="self-end text-xs text-gray-400 md:text-base">
+            Sponsored by
+          </i>
+          <Link href="https://twip.kr/">
+            <a className="w-24 overflow-hidden md:w-40">
+              <Image
+                src="/twip.png"
+                alt="twip logo"
+                width="170px"
+                height="50px"
+              />
             </a>
           </Link>
         </div>
