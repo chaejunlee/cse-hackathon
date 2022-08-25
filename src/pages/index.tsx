@@ -1,28 +1,22 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
 import React, {
   createContext,
-  Dispatch,
-  SetStateAction,
-  useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
 import { clsx } from "clsx";
 import Header from "../components/header";
+import { useQuery } from "react-query";
+import axios from "axios";
 
-const TeamContext = createContext<{
+interface teamDataProps {
   team: number;
-  setTeam: React.Dispatch<React.SetStateAction<number>>;
-}>({
-  team: 0,
-  setTeam: () => {
-    return;
-  },
-});
+  applicant: number;
+}
 
 function AnimatingNumber({
   number,
@@ -61,29 +55,26 @@ function AnimatingNumber({
   );
 }
 
-function CurrentlyEnrolledTeam(): JSX.Element {
-  const { team: enrolled }: { team: number } = useContext<{
-    team: number;
-    setTeam: Dispatch<SetStateAction<number>>;
-  }>(TeamContext);
-
+function CurrentlyEnrolledTeam({ team }: { team: number }): JSX.Element {
   return (
     <div className="flex flex-row items-end gap-2 text-5xl">
       <div className="underline">
-        <AnimatingNumber number={enrolled} speed={10} />
+        <AnimatingNumber number={team} speed={10} />
       </div>
       <p className="self-center text-3xl text-zinc-300">팀</p>
     </div>
   );
 }
 
-function CurrentlyEnrolledPeople(): JSX.Element {
-  const enrolled = useRef(121);
-
+function CurrentlyEnrolledPeople({
+  applicant,
+}: {
+  applicant: number;
+}): JSX.Element {
   return (
     <div className="flex flex-row items-end gap-2 text-5xl">
       <div className="underline ">
-        <AnimatingNumber number={enrolled.current} speed={8} />
+        <AnimatingNumber number={applicant} speed={8} />
       </div>
       <p className="self-center text-3xl text-zinc-300">명</p>
     </div>
@@ -94,7 +85,7 @@ function ApplyButton(): JSX.Element {
   return (
     <div className="fixed flex justify-center left-10 right-10 bottom-10">
       <Link href="/apply">
-        <a className="flex justify-center w-full max-w-4xl py-4 text-xl font-bold text-white transition-colors duration-300 ease-in-out bg-yellow-400 shadow-2xl cursor-pointer md:py-6 md:text-3xl rounded-xl hover:bg-yellow-600 hover:text-zinc-300 animate-bounce">
+        <a className="flex justify-center w-full max-w-4xl py-4 text-xl font-bold text-white transition-colors duration-300 ease-in-out bg-yellow-400 rounded-md shadow-2xl cursor-pointer md:py-4 md:text-3xl hover:bg-yellow-600 hover:text-zinc-300 animate-bounce">
           지원하기
         </a>
       </Link>
@@ -103,10 +94,22 @@ function ApplyButton(): JSX.Element {
 }
 
 const Home: NextPage = () => {
-  const [team, setTeam] = useState(62);
+  const { isLoading, error, data } = useQuery<teamDataProps>(["getData"], () =>
+    axios.get(process.env.NEXT_PUBLIC_DB_URL + "/status").then((res) => {
+      return res.data;
+    })
+  );
+
+  if (isLoading) {
+    return <div>로딩중...</div>;
+  }
+
+  if (error) {
+    return <div>에러가 발생했습니다.</div>;
+  }
 
   return (
-    <TeamContext.Provider value={{ team, setTeam }}>
+    <>
       <Head>
         <title>2022 경북대학교 컴퓨터학부 해커톤</title>
         <meta
@@ -118,7 +121,7 @@ const Home: NextPage = () => {
 
       <Header />
 
-      <main className="flex flex-col items-center justify-center max-w-2xl mx-auto pb-36 md:pb-0">
+      <main className="flex flex-col items-center justify-center max-w-2xl mx-auto pb-36">
         <section className="pt-12 mx-auto w-fit md:pt-20">
           <div className="flex flex-col items-center justify-center gap-4 mx-auto w-fit text-zinc-500">
             <h2 className="flex justify-center px-4 text-4xl font-semibold">
@@ -126,8 +129,8 @@ const Home: NextPage = () => {
             </h2>
             <div className="flex flex-col gap-2 px-4 mx-auto md:flex-row">
               <div className="flex flex-col items-center gap-4 text-xl font-medium text-zinc-300 grow">
-                <CurrentlyEnrolledTeam />
-                <CurrentlyEnrolledPeople />
+                <CurrentlyEnrolledTeam team={data?.team || 0} />
+                <CurrentlyEnrolledPeople applicant={data?.applicant || 0} />
               </div>
             </div>
           </div>
@@ -142,7 +145,9 @@ const Home: NextPage = () => {
             <div className="flex flex-row gap-1 text-5xl font-medium text-white">
               <p className="self-center text-3xl">₩</p>
               <AnimatingNumber
-                number={Math.floor((24 / team) * 1000000)}
+                number={Math.floor(
+                  (24 / (typeof data === "undefined" ? 1 : data.team)) * 1000000
+                )}
                 speed={2}
               />
             </div>
@@ -156,7 +161,7 @@ const Home: NextPage = () => {
         </section>
       </main>
       <ApplyButton />
-    </TeamContext.Provider>
+    </>
   );
 };
 
