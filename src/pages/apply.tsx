@@ -123,7 +123,7 @@ const Apply = () => {
           name: data.leader.name,
           student_number: data.leader.student_number,
           phone_number: data.leader.phone_number,
-          // github: data.leader.github,
+          github: data.leader.github,
         },
         { ...data?.member1 },
         { ...data?.member2 },
@@ -182,21 +182,19 @@ const Apply = () => {
               type={"range"}
               value={numOfTeammates}
               min="1"
-              max="5"
+              max="4"
             />
             <datalist id="numberOfTeam">
               <option value="1" label="1명"></option>
               <option value="2" label="2명"></option>
               <option value="3" label="3명"></option>
               <option value="4" label="4명"></option>
-              <option value="5" label="5명"></option>
             </datalist>
             <div className="flex justify-between text-sm">
               <p className={clsx(numOfTeammates === 1 && "font-bold ")}>1명</p>
-              <p>2명</p>
-              <p>3명</p>
-              <p>4명</p>
-              <p>5명</p>
+              <p className={clsx(numOfTeammates === 2 && "font-bold ")}>2명</p>
+              <p className={clsx(numOfTeammates === 3 && "font-bold ")}>3명</p>
+              <p className={clsx(numOfTeammates === 4 && "font-bold ")}>4명</p>
             </div>
             <p className="text-xl"></p>
           </div>
@@ -245,10 +243,13 @@ const Apply = () => {
 
             <div>
               <label htmlFor="teamName" className="text-zinc-800">
-                깃헙 링크<span className="text-red-500">*</span>
+                깃헙 아이디<span className="text-red-500">*</span>{" "}
+                <span className="text-sm italic text-zinc-600">
+                  (링크가 아닌 아이디만 입력하세요)
+                </span>
               </label>
               <input
-                placeholder="팀장의 깃헙 링크를 입력하세요."
+                placeholder="팀장의 깃헙 아이디를 입력하세요."
                 className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
                 {...register("leader.github", { required: true })}
               />
