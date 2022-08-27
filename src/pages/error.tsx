@@ -1,8 +1,9 @@
 import Head from "next/head";
-import Link from "next/link";
+import { useRouter } from "next/router";
 import Header from "../components/header";
 
 const Error = () => {
+  const router = useRouter();
   return (
     <>
       <Head>
@@ -21,11 +22,12 @@ const Error = () => {
       </div>
 
       <div className="fixed flex justify-center left-10 right-10 bottom-10">
-        <Link href="/apply">
-          <a className="flex justify-center w-full max-w-4xl py-4 text-xl font-bold text-black transition-colors duration-300 ease-in-out bg-yellow-400 rounded-md shadow-2xl cursor-pointer md:py-4 md:text-3xl hover:bg-yellow-600 hover:text-zinc-800">
-            뒤로 돌아가기
-          </a>
-        </Link>
+        <button
+          onClick={() => router.back()}
+          className="flex justify-center w-full max-w-4xl py-4 text-xl font-bold text-black transition-colors duration-300 ease-in-out bg-yellow-400 rounded-md shadow-2xl cursor-pointer md:py-4 md:text-3xl hover:bg-yellow-600 hover:text-zinc-800"
+        >
+          뒤로 돌아가기
+        </button>
       </div>
     </>
   );
