@@ -51,7 +51,8 @@ const TeammateForm = ({
   numOfTeammates: number;
   register: UseFormRegister<formProps>;
   // * 'formProps' needs to be Required
-  errors: FieldErrorsImpl<DeepRequired<formProps>>;
+  // * and the whole type should be "partail-ed"
+  errors: Partial<FieldErrorsImpl<DeepRequired<formProps>>>;
 }): JSX.Element => {
   return (
     <>
