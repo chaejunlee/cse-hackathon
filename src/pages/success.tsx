@@ -36,7 +36,7 @@ const Success = () => {
 
       <Header />
 
-      <div className="mx-auto container flex flex-col items-center justify-center pt-[30vh] gap-4">
+      <div className="mx-auto container flex flex-col items-center justify-center py-[30vh] gap-4 overflow-hidden">
         <Confetti active={showConfetti} config={config} />
         <h2 className="text-3xl font-bold md:text-5xl text-zinc-100">
           신청이 완료되었습니다!
