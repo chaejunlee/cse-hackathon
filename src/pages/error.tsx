@@ -17,8 +17,22 @@ const Error = () => {
 
       <Header />
 
-      <div className="mx-auto container flex items-center justify-center text-3xl md:text-5xl grow text-zinc-100 pt-[30%] animate-bounce font-bold">
-        문제가 발생하였습니다!
+      <div className="mx-auto container flex flex-col items-center justify-center pt-[30vh] gap-4">
+        <h2 className="text-3xl font-bold md:text-5xl text-zinc-100">
+          문제가 발생하였습니다!
+        </h2>
+        <p className="text-lg text-zinc-300">
+          혹시 문제가 지속되는 경우에는 해커톤 TF로 연락주세요.
+        </p>
+        <p className="text-lg text-zinc-300">
+          학생회장 김도현 이메일 주소: 00dh.kim [at] gmail.com
+        </p>
+        <a
+          className="px-4 py-2 rounded-md text-zinc-black bg-zinc-300 "
+          href="mailto:00dh.kim@gmail.com"
+        >
+          학생회장 김도현에게 메일 보내기
+        </a>
       </div>
 
       <div className="fixed flex justify-center left-10 right-10 bottom-10">
