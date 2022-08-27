@@ -3,15 +3,19 @@ import Header from "../components/header";
 import {
   DeepRequired,
   FieldErrorsImpl,
+  SubmitErrorHandler,
   SubmitHandler,
   useForm,
   UseFormRegister,
 } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import clsx from "clsx";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { phone_numberReg, student_numberReg } from "../utils/utils";
+import {
+  phone_numberReg,
+  student_numberReg,
+} from "../utils/utils";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -23,7 +27,9 @@ const leaderSchema = z.object({
   phone_number: z.string().regex(phone_numberReg, {
     message: "전화번호 11자리를 정확하게 입력해주세요",
   }),
-  github: z.string().min(1, { message: "github 아이디를 입력해주세요" }),
+  github: z
+    .string()
+    .min(1, { message: "github 아이디를 입력해주세요" }),
 });
 
 const memberSchema = z.object({
@@ -34,7 +40,9 @@ const memberSchema = z.object({
 });
 
 const schema = z.object({
-  teamName: z.string().min(1, { message: "팀명을 입력해주세요" }),
+  teamName: z
+    .string()
+    .min(1, { message: "팀명을 입력해주세요" }),
   leader: leaderSchema,
   member1: memberSchema.optional(),
   member2: memberSchema.optional(),
@@ -46,6 +54,7 @@ type formProps = z.infer<typeof schema>;
 const TeammateForm = ({
   numOfTeammates,
   register,
+
   errors,
 }: {
   numOfTeammates: number;
@@ -54,6 +63,7 @@ const TeammateForm = ({
   // * and the whole type should be "partail-ed"
   errors: Partial<FieldErrorsImpl<DeepRequired<formProps>>>;
 }): JSX.Element => {
+  // useEffect(() => {}, [numOfTeammates]);
   return (
     <>
       <div className="flex flex-col gap-4 px-3 py-3 rounded-md bg-white/70 backdrop-blur-sm">
@@ -206,11 +216,16 @@ const Apply = () => {
     register,
     handleSubmit,
     formState: { errors },
+    clearErrors,
+    resetField,
   } = useForm<formProps>({
-    mode: "onBlur",
+    mode: "all",
+    reValidateMode: "onChange",
     resolver: zodResolver(schema),
   });
-  const [numOfTeammates, setNumOfTeammates] = useState<number>(1);
+  const [numOfTeammates, setNumOfTeammates] =
+    useState<number>(1);
+  console.log("numOfTeammates >> ", numOfTeammates);
   const router = useRouter();
   const onSubmit: SubmitHandler<formProps> = (data) => {
     const formattedData = {
@@ -227,12 +242,27 @@ const Apply = () => {
         { ...data?.member3 },
       ].filter((_, index) => index <= numOfTeammates - 1),
     };
-    console.log(formattedData);
+    console.log("formattedData >> ", formattedData);
     axios
       .post("/api/apply", formattedData)
       .then(() => router.push("/success"))
       .catch(() => router.push("/error"));
   };
+
+  const onSubmitInvalid: SubmitErrorHandler<formProps> = (
+    errors
+  ) => {
+    console.error("errors >> ", errors);
+  };
+
+  useEffect(() => {
+    console.log("cleared");
+    clearErrors();
+    for (let i = 0; i < 3 - (numOfTeammates - 1); i++) {
+      resetField(`member${3 - i}` as any);
+    }
+  }, [numOfTeammates, resetField, clearErrors]);
+
   return (
     <>
       <Head>
@@ -249,30 +279,8 @@ const Apply = () => {
       <main className="container flex flex-col items-center justify-center max-w-2xl px-2 pt-12 pb-8 mx-auto">
         <form
           className="flex flex-col w-full max-w-lg gap-4"
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(onSubmit, onSubmitInvalid)}
         >
-          <div className="flex flex-col gap-2 px-3 py-3 rounded-md bg-white/70 backdrop-blur-sm">
-            <label htmlFor="teamName">
-              <h3 className="flex items-center gap-1 text-xl font-semibold text-zinc-800">
-                팀명<span className="text-sm text-red-500">*</span>
-              </h3>
-            </label>
-            <div>
-              <input
-                placeholder="팀의 이름을 입력하세요."
-                className={
-                  "block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm" +
-                  (errors.teamName?.message
-                    ? " focus:ring-red-600 focus:border-red-600 ring-red-600 ring-2"
-                    : "")
-                }
-                {...register("teamName", { required: true })}
-              />
-              {errors.teamName?.message && (
-                <p className="pt-1 text-red-600">{errors.teamName?.message}</p>
-              )}
-            </div>
-          </div>
           <div className="flex flex-col gap-2 px-3 py-3 rounded-md bg-white/70 backdrop-blur-sm">
             <label
               htmlFor="teamName"
@@ -298,25 +306,78 @@ const Apply = () => {
               <option value="4" label="4명"></option>
             </datalist>
             <div className="flex justify-between text-sm">
-              <p className={clsx(numOfTeammates === 1 && "font-bold ")}>1명</p>
-              <p className={clsx(numOfTeammates === 2 && "font-bold ")}>2명</p>
-              <p className={clsx(numOfTeammates === 3 && "font-bold ")}>3명</p>
-              <p className={clsx(numOfTeammates === 4 && "font-bold ")}>4명</p>
+              <p
+                className={clsx(
+                  numOfTeammates === 1 && "font-bold "
+                )}
+              >
+                1명
+              </p>
+              <p
+                className={clsx(
+                  numOfTeammates === 2 && "font-bold "
+                )}
+              >
+                2명
+              </p>
+              <p
+                className={clsx(
+                  numOfTeammates === 3 && "font-bold "
+                )}
+              >
+                3명
+              </p>
+              <p
+                className={clsx(
+                  numOfTeammates === 4 && "font-bold "
+                )}
+              >
+                4명
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col gap-2 px-3 py-3 rounded-md bg-white/70 backdrop-blur-sm">
+            <label htmlFor="teamName">
+              <h3 className="flex items-center gap-1 text-xl font-semibold text-zinc-800">
+                팀명
+                <span className="text-sm text-red-500">*</span>
+              </h3>
+            </label>
+            <div>
+              <input
+                placeholder="팀의 이름을 입력하세요."
+                className={
+                  "block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm" +
+                  (errors.teamName?.message
+                    ? " focus:ring-red-600 focus:border-red-600 ring-red-600 ring-2"
+                    : "")
+                }
+                {...register("teamName", { required: true })}
+              />
+              {errors.teamName?.message && (
+                <p className="pt-1 text-red-600">
+                  {errors.teamName?.message}
+                </p>
+              )}
             </div>
           </div>
 
           <div className="flex flex-col gap-4 px-3 py-3 rounded-md bg-white/70 backdrop-blur-sm">
             <div>
               <h3 className="flex items-center gap-1 text-xl font-semibold text-zinc-800">
-                팀장<span className="text-sm text-red-500">*</span>
+                팀장
+                <span className="text-sm text-red-500">*</span>
               </h3>
               <p className="text-sm text-zinc-600">
-                팀장은 반드시 컴퓨터학부 또는 연계/융합 전공 재학생이어야
-                합니다.
+                팀장은 반드시 컴퓨터학부 또는 연계/융합 전공
+                재학생이어야 합니다.
               </p>
             </div>
             <div>
-              <label htmlFor="teamName" className="text-zinc-800">
+              <label
+                htmlFor="teamName"
+                className="text-zinc-800"
+              >
                 이름<span className="text-red-500">*</span>
               </label>
               <input
@@ -337,7 +398,10 @@ const Apply = () => {
             </div>
 
             <div>
-              <label htmlFor="teamName" className="text-zinc-800">
+              <label
+                htmlFor="teamName"
+                className="text-zinc-800"
+              >
                 학번<span className="text-red-500">*</span>
               </label>
               <input
@@ -361,7 +425,10 @@ const Apply = () => {
             </div>
 
             <div>
-              <label htmlFor="teamName" className="text-zinc-800">
+              <label
+                htmlFor="teamName"
+                className="text-zinc-800"
+              >
                 전화번호<span className="text-red-500">*</span>{" "}
                 <span className="text-sm italic text-zinc-600">
                   (&quot;-&quot; 를 포함해서 적어주세요.)
@@ -388,8 +455,12 @@ const Apply = () => {
             </div>
 
             <div>
-              <label htmlFor="teamName" className="text-zinc-800">
-                깃헙 아이디<span className="text-red-500">*</span>{" "}
+              <label
+                htmlFor="teamName"
+                className="text-zinc-800"
+              >
+                깃헙 아이디
+                <span className="text-red-500">*</span>{" "}
                 <span className="text-sm italic text-zinc-600">
                   (링크가 아닌 아이디만 입력하세요)
                 </span>
@@ -402,7 +473,9 @@ const Apply = () => {
                     ? " focus:ring-red-600 focus:border-red-600 ring-red-600 ring-2"
                     : "")
                 }
-                {...register("leader.github", { required: true })}
+                {...register("leader.github", {
+                  required: true,
+                })}
               />
               {errors.leader?.github?.message && (
                 <p className="pt-1 text-red-600">
@@ -413,21 +486,19 @@ const Apply = () => {
           </div>
           {Array.from(Array(numOfTeammates)).map((_, index) => {
             return (
-              <>
-                {index > 0 && (
-                  <TeammateForm
-                    key={"teammate_" + index}
-                    numOfTeammates={index}
-                    register={register}
-                    errors={errors}
-                  />
-                )}
-              </>
+              index > 0 && (
+                <TeammateForm
+                  key={"teammate_" + index}
+                  numOfTeammates={index}
+                  register={register}
+                  errors={errors}
+                />
+              )
             );
           })}
           <button
             className="flex justify-center w-full max-w-4xl py-4 text-xl font-bold text-black transition-colors duration-300 ease-in-out bg-yellow-400 rounded-md shadow-2xl cursor-pointer md:py-4 md:text-3xl hover:bg-yellow-600 hover:text-zinc-800"
-            onClick={() => console.log(errors)}
+            // onClick={() => console.error(errors)}
           >
             지원하기
           </button>
