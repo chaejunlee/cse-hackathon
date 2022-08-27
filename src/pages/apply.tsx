@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Header from "../components/header";
 import {
+  DeepRequired,
   FieldErrorsImpl,
   SubmitHandler,
   useForm,
@@ -49,7 +50,8 @@ const TeammateForm = ({
 }: {
   numOfTeammates: number;
   register: UseFormRegister<formProps>;
-  errors: FieldErrorsImpl<formProps>;
+  // * 'formProps' needs to be Required
+  errors: FieldErrorsImpl<DeepRequired<formProps>>;
 }): JSX.Element => {
   return (
     <>
