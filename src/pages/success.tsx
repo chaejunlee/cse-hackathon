@@ -36,7 +36,7 @@ const Success = () => {
 
       <Header />
 
-      <div className="mx-auto container flex flex-col items-center justify-center py-[30vh] gap-4 overflow-hidden">
+      <footer className="mx-auto container flex flex-col items-center justify-center py-[30vh] gap-4 overflow-hidden">
         <Confetti active={showConfetti} config={config} />
         <h2 className="text-3xl font-bold md:text-5xl text-zinc-100">
           신청이 완료되었습니다!
@@ -54,7 +54,7 @@ const Success = () => {
         >
           학생회장 김도현에게 메일 보내기
         </a>
-      </div>
+      </footer>
     </>
   );
 };
