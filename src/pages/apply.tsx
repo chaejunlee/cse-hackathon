@@ -6,6 +6,7 @@ import clsx from "clsx";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { phone_numberReg, student_numberReg } from "../utils/utils";
 
 interface memberProps {
   name: string;
@@ -80,28 +81,40 @@ const TeammateForm = ({
             <input
               placeholder="팀장의 학번을 입력하세요."
               className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
-              {...register("member1.student_number", { required: true })}
+              {...register("member1.student_number", {
+                required: true,
+                pattern: student_numberReg,
+              })}
             />
           )}
           {numOfTeammates === 2 && (
             <input
               placeholder="팀장의 학번을 입력하세요."
               className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
-              {...register("member2.student_number", { required: true })}
+              {...register("member2.student_number", {
+                required: true,
+                pattern: student_numberReg,
+              })}
             />
           )}
           {numOfTeammates === 3 && (
             <input
               placeholder="팀장의 학번을 입력하세요."
               className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
-              {...register("member3.student_number", { required: true })}
+              {...register("member3.student_number", {
+                required: true,
+                pattern: student_numberReg,
+              })}
             />
           )}
           {numOfTeammates === 4 && (
             <input
               placeholder="팀장의 학번을 입력하세요."
               className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
-              {...register("member4.student_number", { required: true })}
+              {...register("member4.student_number", {
+                required: true,
+                pattern: student_numberReg,
+              })}
             />
           )}
         </div>
@@ -205,7 +218,8 @@ const Apply = () => {
                 팀장<span className="text-sm text-red-500">*</span>
               </h3>
               <p className="text-sm text-zinc-600">
-                팀장은 반드시 컴퓨터학부 또는 연계/융합 전공 재학생이어야 함
+                팀장은 반드시 컴퓨터학부 또는 연계/융합 전공 재학생이어야
+                합니다.
               </p>
             </div>
             <div>
@@ -224,20 +238,29 @@ const Apply = () => {
                 학번<span className="text-red-500">*</span>
               </label>
               <input
-                placeholder="팀장의 학번을 입력하세요."
+                placeholder="학번 10자리를 입력하세요."
                 className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
-                {...register("leader.student_number", { required: true })}
+                {...register("leader.student_number", {
+                  required: true,
+                  pattern: student_numberReg,
+                })}
               />
             </div>
 
             <div>
               <label htmlFor="teamName" className="text-zinc-800">
-                전화번호<span className="text-red-500">*</span>
+                전화번호<span className="text-red-500">*</span>{" "}
+                <span className="text-sm italic text-zinc-600">
+                  (&quot;-&quot; 를 포함해서 적어주세요.)
+                </span>
               </label>
               <input
-                placeholder="팀장의 전화번호를 입력하세요."
+                placeholder="예시) 010-1234-5678"
                 className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
-                {...register("leader.phone_number", { required: true })}
+                {...register("leader.phone_number", {
+                  required: true,
+                  pattern: phone_numberReg,
+                })}
               />
             </div>
 
@@ -249,7 +272,7 @@ const Apply = () => {
                 </span>
               </label>
               <input
-                placeholder="팀장의 깃헙 아이디를 입력하세요."
+                placeholder="예시) knu_cse_student"
                 className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
                 {...register("leader.github", { required: true })}
               />
