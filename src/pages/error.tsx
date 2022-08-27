@@ -22,7 +22,7 @@ const Error = () => {
           문제가 발생하였습니다!
         </h2>
         <p className="text-lg text-zinc-300">
-          혹시 문제가 지속되는 경우에는 해커톤 TF로 연락주세요.
+          문제가 지속되는 경우에는 해커톤 TF로 연락주세요.
         </p>
         <p className="text-lg text-zinc-300">
           학생회장 김도현 이메일 주소: 00dh.kim [at] gmail.com
