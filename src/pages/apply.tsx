@@ -35,9 +35,9 @@ const memberSchema = z.object({
 const schema = z.object({
   teamName: z.string().min(1, { message: "팀명을 입력해주세요" }),
   leader: leaderSchema,
-  member1: memberSchema,
-  member2: memberSchema,
-  member3: memberSchema,
+  member1: memberSchema.optional(),
+  member2: memberSchema.optional(),
+  member3: memberSchema.optional(),
 });
 
 type formProps = z.infer<typeof schema>;
@@ -224,6 +224,7 @@ const Apply = () => {
         { ...data?.member3 },
       ].filter((_, index) => index <= numOfTeammates - 1),
     };
+    console.log(formattedData);
     axios
       .post("/api/apply", formattedData)
       .then(() => router.push("/success"))
@@ -421,7 +422,10 @@ const Apply = () => {
               </>
             );
           })}
-          <button className="flex justify-center w-full max-w-4xl py-4 text-xl font-bold text-black transition-colors duration-300 ease-in-out bg-yellow-400 rounded-md shadow-2xl cursor-pointer md:py-4 md:text-3xl hover:bg-yellow-600 hover:text-zinc-800">
+          <button
+            className="flex justify-center w-full max-w-4xl py-4 text-xl font-bold text-black transition-colors duration-300 ease-in-out bg-yellow-400 rounded-md shadow-2xl cursor-pointer md:py-4 md:text-3xl hover:bg-yellow-600 hover:text-zinc-800"
+            onClick={() => console.log(errors)}
+          >
             지원하기
           </button>
         </form>
