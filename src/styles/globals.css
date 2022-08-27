@@ -7,5 +7,5 @@ html {
 }
 
 body {
-  @apply min-height bg-fixed bg-center bg-gradient-to-br from-[hsl(333,23%,36%)]  via-[hsl(228,63%,14%)] to-[hsl(224,50%,10%)] bg-no-repeat;
+  @apply min-h-screen bg-fixed bg-center bg-gradient-to-br from-[hsl(333,23%,36%)]  via-[hsl(228,63%,14%)] to-[hsl(224,50%,10%)] bg-no-repeat;
 }

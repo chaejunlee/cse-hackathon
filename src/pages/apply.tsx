@@ -1,35 +1,55 @@
 import Head from "next/head";
 import Header from "../components/header";
-import { SubmitHandler, useForm, UseFormRegister } from "react-hook-form";
+import {
+  FieldErrorsImpl,
+  SubmitHandler,
+  useForm,
+  UseFormRegister,
+} from "react-hook-form";
 import { useState } from "react";
 import clsx from "clsx";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { phone_numberReg, student_numberReg } from "../utils/utils";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-interface memberProps {
-  name: string;
-  student_number: string;
-  phone_number?: string;
-  github?: string;
-}
+const leaderSchema = z.object({
+  name: z.string().min(1, { message: "이름을 입력해주세요" }),
+  student_number: z.string().regex(student_numberReg, {
+    message: "학번 10자리를 정확하게 입력해주세요",
+  }),
+  phone_number: z.string().regex(phone_numberReg, {
+    message: "전화번호 11자리를 정확하게 입력해주세요",
+  }),
+  github: z.string().min(1, { message: "github 아이디를 입력해주세요" }),
+});
 
-interface formProps {
-  teamName: string;
-  leader: memberProps;
-  member1?: memberProps;
-  member2?: memberProps;
-  member3?: memberProps;
-  member4?: memberProps;
-}
+const memberSchema = z.object({
+  name: z.string().min(1, { message: "이름을 입력해주세요" }),
+  student_number: z.string().regex(student_numberReg, {
+    message: "학번 10자리를 정확하게 입력해주세요",
+  }),
+});
+
+const schema = z.object({
+  teamName: z.string().min(1, { message: "팀명을 입력해주세요" }),
+  leader: leaderSchema,
+  member1: memberSchema,
+  member2: memberSchema,
+  member3: memberSchema,
+});
+
+type formProps = z.infer<typeof schema>;
 
 const TeammateForm = ({
   numOfTeammates,
   register,
+  errors,
 }: {
   numOfTeammates: number;
   register: UseFormRegister<formProps>;
+  errors: FieldErrorsImpl<formProps>;
 }): JSX.Element => {
   return (
     <>
@@ -44,32 +64,61 @@ const TeammateForm = ({
             이름<span className="text-red-500">*</span>
           </label>
           {numOfTeammates === 1 && (
-            <input
-              placeholder="팀원의 이름을 입력하세요."
-              className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
-              {...register("member1.name", { required: true })}
-            />
+            <>
+              <input
+                placeholder="팀원의 이름을 입력하세요."
+                className={
+                  "block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm" +
+                  (errors.member1?.name?.message
+                    ? " focus:ring-red-600 focus:border-red-600 ring-red-600 ring-2"
+                    : "")
+                }
+                {...register("member1.name", { required: true })}
+              />
+              {errors.member1?.name?.message && (
+                <p className="pt-1 text-red-600">
+                  {errors.member1?.name?.message}
+                </p>
+              )}
+            </>
           )}
           {numOfTeammates === 2 && (
-            <input
-              placeholder="팀원의 이름을 입력하세요."
-              className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
-              {...register("member2.name", { required: true })}
-            />
+            <>
+              <input
+                placeholder="팀원의 이름을 입력하세요."
+                className={
+                  "block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm" +
+                  (errors.member2?.name?.message
+                    ? " focus:ring-red-600 focus:border-red-600 ring-red-600 ring-2"
+                    : "")
+                }
+                {...register("member2.name", { required: true })}
+              />
+              {errors.member2?.name?.message && (
+                <p className="pt-1 text-red-600">
+                  {errors.member2?.name?.message}
+                </p>
+              )}
+            </>
           )}
           {numOfTeammates === 3 && (
-            <input
-              placeholder="팀원의 이름을 입력하세요."
-              className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
-              {...register("member3.name", { required: true })}
-            />
-          )}
-          {numOfTeammates === 4 && (
-            <input
-              placeholder="팀원의 이름을 입력하세요."
-              className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
-              {...register("member4.name", { required: true })}
-            />
+            <>
+              <input
+                placeholder="팀원의 이름을 입력하세요."
+                className={
+                  "block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm" +
+                  (errors.member3?.name?.message
+                    ? " focus:ring-red-600 focus:border-red-600 ring-red-600 ring-2"
+                    : "")
+                }
+                {...register("member3.name", { required: true })}
+              />
+              {errors.member3?.name?.message && (
+                <p className="pt-1 text-red-600">
+                  {errors.member3?.name?.message}
+                </p>
+              )}
+            </>
           )}
         </div>
 
@@ -78,44 +127,70 @@ const TeammateForm = ({
             학번<span className="text-red-500">*</span>
           </label>
           {numOfTeammates === 1 && (
-            <input
-              placeholder="팀장의 학번을 입력하세요."
-              className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
-              {...register("member1.student_number", {
-                required: true,
-                pattern: student_numberReg,
-              })}
-            />
+            <>
+              <input
+                placeholder="팀장의 학번을 입력하세요."
+                className={
+                  "block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm" +
+                  (errors.member1?.student_number?.message
+                    ? " focus:ring-red-600 focus:border-red-600 ring-red-600 ring-2"
+                    : "")
+                }
+                {...register("member1.student_number", {
+                  required: true,
+                  pattern: student_numberReg,
+                })}
+              />
+              {errors.member1?.student_number?.message && (
+                <p className="pt-1 text-red-600">
+                  {errors.member1?.student_number?.message}
+                </p>
+              )}
+            </>
           )}
           {numOfTeammates === 2 && (
-            <input
-              placeholder="팀장의 학번을 입력하세요."
-              className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
-              {...register("member2.student_number", {
-                required: true,
-                pattern: student_numberReg,
-              })}
-            />
+            <>
+              <input
+                placeholder="팀장의 학번을 입력하세요."
+                className={
+                  "block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm" +
+                  (errors.member2?.student_number?.message
+                    ? " focus:ring-red-600 focus:border-red-600 ring-red-600 ring-2"
+                    : "")
+                }
+                {...register("member2.student_number", {
+                  required: true,
+                  pattern: student_numberReg,
+                })}
+              />
+              {errors.member2?.student_number?.message && (
+                <p className="pt-1 text-red-600">
+                  {errors.member2?.student_number?.message}
+                </p>
+              )}
+            </>
           )}
           {numOfTeammates === 3 && (
-            <input
-              placeholder="팀장의 학번을 입력하세요."
-              className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
-              {...register("member3.student_number", {
-                required: true,
-                pattern: student_numberReg,
-              })}
-            />
-          )}
-          {numOfTeammates === 4 && (
-            <input
-              placeholder="팀장의 학번을 입력하세요."
-              className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
-              {...register("member4.student_number", {
-                required: true,
-                pattern: student_numberReg,
-              })}
-            />
+            <>
+              <input
+                placeholder="팀장의 학번을 입력하세요."
+                className={
+                  "block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm" +
+                  (errors.member3?.student_number?.message
+                    ? " focus:ring-red-600 focus:border-red-600 ring-red-600 ring-2"
+                    : "")
+                }
+                {...register("member3.student_number", {
+                  required: true,
+                  pattern: student_numberReg,
+                })}
+              />
+              {errors.member3?.student_number?.message && (
+                <p className="pt-1 text-red-600">
+                  {errors.member3?.student_number?.message}
+                </p>
+              )}
+            </>
           )}
         </div>
       </div>
@@ -124,9 +199,15 @@ const TeammateForm = ({
 };
 
 const Apply = () => {
-  const { register, handleSubmit } = useForm<formProps>({ mode: "onSubmit" });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<formProps>({
+    mode: "onBlur",
+    resolver: zodResolver(schema),
+  });
   const [numOfTeammates, setNumOfTeammates] = useState<number>(1);
-  const [animateRef] = useAutoAnimate<HTMLDivElement>();
   const router = useRouter();
   const onSubmit: SubmitHandler<formProps> = (data) => {
     const formattedData = {
@@ -141,7 +222,6 @@ const Apply = () => {
         { ...data?.member1 },
         { ...data?.member2 },
         { ...data?.member3 },
-        { ...data?.member4 },
       ].filter((_, index) => index <= numOfTeammates - 1),
     };
     axios
@@ -173,11 +253,21 @@ const Apply = () => {
                 팀명<span className="text-sm text-red-500">*</span>
               </h3>
             </label>
-            <input
-              placeholder="팀의 이름을 입력하세요."
-              className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
-              {...register("teamName", { required: true })}
-            />
+            <div>
+              <input
+                placeholder="팀의 이름을 입력하세요."
+                className={
+                  "block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm" +
+                  (errors.teamName?.message
+                    ? " focus:ring-red-600 focus:border-red-600 ring-red-600 ring-2"
+                    : "")
+                }
+                {...register("teamName", { required: true })}
+              />
+              {errors.teamName?.message && (
+                <p className="pt-1 text-red-600">{errors.teamName?.message}</p>
+              )}
+            </div>
           </div>
           <div className="flex flex-col gap-2 px-3 py-3 rounded-md bg-white/70 backdrop-blur-sm">
             <label
@@ -209,7 +299,6 @@ const Apply = () => {
               <p className={clsx(numOfTeammates === 3 && "font-bold ")}>3명</p>
               <p className={clsx(numOfTeammates === 4 && "font-bold ")}>4명</p>
             </div>
-            <p className="text-xl"></p>
           </div>
 
           <div className="flex flex-col gap-4 px-3 py-3 rounded-md bg-white/70 backdrop-blur-sm">
@@ -228,9 +317,19 @@ const Apply = () => {
               </label>
               <input
                 placeholder="팀장의 이름을 입력하세요."
-                className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
+                className={
+                  "block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm" +
+                  (errors.leader?.name?.message
+                    ? " focus:ring-red-600 focus:border-red-600 ring-red-600 ring-2"
+                    : "")
+                }
                 {...register("leader.name", { required: true })}
               />
+              {errors.leader?.name?.message && (
+                <p className="pt-1 text-red-600">
+                  {errors.leader?.name?.message}
+                </p>
+              )}
             </div>
 
             <div>
@@ -239,12 +338,22 @@ const Apply = () => {
               </label>
               <input
                 placeholder="학번 10자리를 입력하세요."
-                className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
+                className={
+                  "block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm" +
+                  (errors.leader?.student_number?.message
+                    ? " focus:ring-red-600 focus:border-red-600 ring-red-600 ring-2"
+                    : "")
+                }
                 {...register("leader.student_number", {
                   required: true,
                   pattern: student_numberReg,
                 })}
               />
+              {errors.leader?.student_number?.message && (
+                <p className="pt-1 text-red-600">
+                  {errors.leader?.student_number?.message}
+                </p>
+              )}
             </div>
 
             <div>
@@ -256,12 +365,22 @@ const Apply = () => {
               </label>
               <input
                 placeholder="예시) 010-1234-5678"
-                className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
+                className={
+                  "block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm" +
+                  (errors.leader?.phone_number?.message
+                    ? " focus:ring-red-600 focus:border-red-600 ring-red-600 ring-2"
+                    : "")
+                }
                 {...register("leader.phone_number", {
                   required: true,
                   pattern: phone_numberReg,
                 })}
               />
+              {errors.leader?.phone_number?.message && (
+                <p className="pt-1 text-red-600">
+                  {errors.leader?.phone_number?.message}
+                </p>
+              )}
             </div>
 
             <div>
@@ -273,42 +392,35 @@ const Apply = () => {
               </label>
               <input
                 placeholder="예시) knu_cse_student"
-                className="block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm"
+                className={
+                  "block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm" +
+                  (errors.leader?.github?.message
+                    ? " focus:ring-red-600 focus:border-red-600 ring-red-600 ring-2"
+                    : "")
+                }
                 {...register("leader.github", { required: true })}
               />
+              {errors.leader?.github?.message && (
+                <p className="pt-1 text-red-600">
+                  {errors.leader?.github?.message}
+                </p>
+              )}
             </div>
           </div>
-          {animateRef && numOfTeammates > 2 ? (
-            <div ref={animateRef} className="flex flex-col gap-4">
-              {Array.from(Array(numOfTeammates)).map((_, index) => {
-                return (
-                  <>
-                    {index > 0 && (
-                      <TeammateForm
-                        key={"teammate_" + index}
-                        numOfTeammates={index}
-                        register={register}
-                      />
-                    )}
-                  </>
-                );
-              })}
-            </div>
-          ) : (
-            Array.from(Array(numOfTeammates)).map((_, index) => {
-              return (
-                <>
-                  {index > 0 && (
-                    <TeammateForm
-                      key={"teammate_" + index}
-                      numOfTeammates={index}
-                      register={register}
-                    />
-                  )}
-                </>
-              );
-            })
-          )}
+          {Array.from(Array(numOfTeammates)).map((_, index) => {
+            return (
+              <>
+                {index > 0 && (
+                  <TeammateForm
+                    key={"teammate_" + index}
+                    numOfTeammates={index}
+                    register={register}
+                    errors={errors}
+                  />
+                )}
+              </>
+            );
+          })}
           <button className="flex justify-center w-full max-w-4xl py-4 text-xl font-bold text-black transition-colors duration-300 ease-in-out bg-yellow-400 rounded-md shadow-2xl cursor-pointer md:py-4 md:text-3xl hover:bg-yellow-600 hover:text-zinc-800">
             지원하기
           </button>
