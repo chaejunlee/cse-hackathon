@@ -21,7 +21,7 @@ const Header = () => {
             Sponsored by
           </i>
           <Link href="https://twip.kr/">
-            <a className="w-24 md:w-40">
+            <a className="w-24 md:w-40" target="_blank">
               <div className="transition-all duration-300 ease-out hover:scale-105 hover:drop-shadow-xl">
                 <Image
                   src="/twip.png"
