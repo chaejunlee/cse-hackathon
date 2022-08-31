@@ -26,35 +26,34 @@ const Success = () => {
   return (
     <>
       <Head>
-        <title>2022 경북대학교 컴퓨터학부 해커톤</title>
-        <meta
-          name="description"
-          content="2022년 경북대학교 컴퓨터학부 해커톤"
-        />
+        <title>2022 대구를 빛내는 SW 해커톤</title>
+        <meta name="description" content="2022 대구를 빛내는 SW 해커톤" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <Header />
 
-      <footer className="mx-auto container flex flex-col items-center justify-center py-[30vh] gap-4 overflow-hidden">
+      <main className="mx-auto container flex flex-col items-center justify-center py-[20vh] gap-4 overflow-hidden">
         <Confetti active={showConfetti} config={config} />
         <h2 className="text-3xl font-bold md:text-5xl text-zinc-100">
           신청이 완료되었습니다!
         </h2>
-        <div className="flex flex-col items-center justify-center gap-2">
-          <p className="text-lg text-zinc-300">
-            문의 사항이 있다면 해커톤 TF로 연락주세요.
+        <div className="flex flex-col items-center text-2xl justify-center gap-4">
+          <p className="text-zinc-300 text-center">
+            팀장님께서는 오픈톡방으로
+            <br />
+            입장해주세요.
           </p>
-          <p className="text-lg text-zinc-300">학생회장 김도현 이메일 주소:</p>
-          <p className="text-lg text-zinc-300">00dh.kim [at] gmail.com</p>
+          <a
+            className="px-4 py-2 rounded-md text-black font-bold bg-yellow-300 text-base"
+            href="https://open.kakao.com/o/g0F7sPye"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            해커톤 오픈톡방 입장하기
+          </a>
         </div>
-        <a
-          className="px-4 py-2 rounded-md text-zinc-black bg-zinc-300 "
-          href="mailto:00dh.kim@gmail.com"
-        >
-          학생회장 김도현에게 메일 보내기
-        </a>
-      </footer>
+      </main>
     </>
   );
 };

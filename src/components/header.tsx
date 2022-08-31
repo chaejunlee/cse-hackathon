@@ -9,8 +9,9 @@ const Header = () => {
           <Link href={"/"}>
             <a>
               <h1 className="bg-clip-text text-transparent bg-gradient-to-br w-fit from-yellow-400 via-[rgb(218,108,128)] to-[rgb(162,87,152)] cursor-pointer hover:scale-105 transition-all duration-300 ease-out hover:drop-shadow-xl">
-                <p>2022 경북대학교</p>
-                <p>컴퓨터학부 해커톤</p>
+                <p>2022</p>
+                <p>대구를 빛내는</p>
+                <p>SW 해커톤</p>
               </h1>
             </a>
           </Link>

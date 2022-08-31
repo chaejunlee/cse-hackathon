@@ -7,17 +7,14 @@ const Error = () => {
   return (
     <>
       <Head>
-        <title>2022 경북대학교 컴퓨터학부 해커톤</title>
-        <meta
-          name="description"
-          content="2022년 경북대학교 컴퓨터학부 해커톤"
-        />
+        <title>2022 대구를 빛내는 SW 해커톤</title>
+        <meta name="description" content="2022 대구를 빛내는 SW 해커톤" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <Header />
 
-      <footer className="mx-auto container flex flex-col items-center justify-center pt-[30vh] gap-4">
+      <main className="mx-auto container flex flex-col items-center justify-center pt-[20vh] gap-4">
         <h2 className="text-3xl font-bold md:text-5xl text-zinc-100">
           문제가 발생하였습니다!
         </h2>
@@ -34,7 +31,7 @@ const Error = () => {
         >
           학생회장 김도현에게 메일 보내기
         </a>
-      </footer>
+      </main>
 
       <div className="fixed flex justify-center left-10 right-10 bottom-10">
         <button
