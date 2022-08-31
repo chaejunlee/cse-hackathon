@@ -31,6 +31,7 @@ const memberSchema = z.object({
   student_number: z.string().regex(student_numberReg, {
     message: "학번 10자리를 정확하게 입력해주세요",
   }),
+  student_department: z.string().min(1, { message: "학과를 입력해주세요" }),
 });
 
 const schema = z.object({
@@ -63,7 +64,7 @@ const TeammateForm = ({
           </h3>
         </div>
         <div>
-          <label htmlFor="teamName" className="text-zinc-800">
+          <label htmlFor="teamName" className="text-zinc-800 font-semibold">
             이름<span className="text-red-500">*</span>
           </label>
           {numOfTeammates === 1 && (
@@ -124,15 +125,14 @@ const TeammateForm = ({
             </>
           )}
         </div>
-
         <div>
-          <label htmlFor="teamName" className="text-zinc-800">
+          <label htmlFor="teamName" className="text-zinc-800 font-semibold">
             학번<span className="text-red-500">*</span>
           </label>
           {numOfTeammates === 1 && (
             <>
               <input
-                placeholder="팀장의 학번을 입력하세요."
+                placeholder="팀원의 학번을 입력하세요."
                 className={
                   "block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm" +
                   (errors.member1?.student_number?.message
@@ -154,7 +154,7 @@ const TeammateForm = ({
           {numOfTeammates === 2 && (
             <>
               <input
-                placeholder="팀장의 학번을 입력하세요."
+                placeholder="팀원의 학번을 입력하세요."
                 className={
                   "block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm" +
                   (errors.member2?.student_number?.message
@@ -176,7 +176,7 @@ const TeammateForm = ({
           {numOfTeammates === 3 && (
             <>
               <input
-                placeholder="팀장의 학번을 입력하세요."
+                placeholder="팀원의 학번을 입력하세요."
                 className={
                   "block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm" +
                   (errors.member3?.student_number?.message
@@ -191,6 +191,74 @@ const TeammateForm = ({
               {errors.member3?.student_number?.message && (
                 <p className="pt-1 text-red-600">
                   {errors.member3?.student_number?.message}
+                </p>
+              )}
+            </>
+          )}
+        </div>
+        <div>
+          <label htmlFor="teamName" className="text-zinc-800 font-semibold">
+            학과/부<span className="text-red-500">*</span>
+          </label>
+          {numOfTeammates === 1 && (
+            <>
+              <input
+                placeholder="팀원의 학과/부를 입력하세요."
+                className={
+                  "block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm" +
+                  (errors.member1?.student_department?.message
+                    ? " focus:ring-red-600 focus:border-red-600 ring-red-600 ring-2"
+                    : "")
+                }
+                {...register("member1.student_department", {
+                  required: true,
+                })}
+              />
+              {errors.member1?.student_department?.message && (
+                <p className="pt-1 text-red-600">
+                  {errors.member1?.student_department?.message}
+                </p>
+              )}
+            </>
+          )}
+          {numOfTeammates === 2 && (
+            <>
+              <input
+                placeholder="팀원의 학과/부를 입력하세요."
+                className={
+                  "block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm" +
+                  (errors.member2?.student_department?.message
+                    ? " focus:ring-red-600 focus:border-red-600 ring-red-600 ring-2"
+                    : "")
+                }
+                {...register("member2.student_department", {
+                  required: true,
+                })}
+              />
+              {errors.member2?.student_department?.message && (
+                <p className="pt-1 text-red-600">
+                  {errors.member2?.student_department?.message}
+                </p>
+              )}
+            </>
+          )}
+          {numOfTeammates === 3 && (
+            <>
+              <input
+                placeholder="팀원의 학과/부를 입력하세요."
+                className={
+                  "block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm" +
+                  (errors.member3?.student_department?.message
+                    ? " focus:ring-red-600 focus:border-red-600 ring-red-600 ring-2"
+                    : "")
+                }
+                {...register("member3.student_department", {
+                  required: true,
+                })}
+              />
+              {errors.member3?.student_department?.message && (
+                <p className="pt-1 text-red-600">
+                  {errors.member3?.student_department?.message}
                 </p>
               )}
             </>
@@ -233,20 +301,18 @@ const Apply = () => {
       .then(() => router.push("/success"))
       .catch(() => router.push("/error"));
   };
+
   return (
     <>
       <Head>
-        <title>2022 경북대학교 컴퓨터학부 해커톤</title>
-        <meta
-          name="description"
-          content="2022년 경북대학교 컴퓨터학부 해커톤"
-        />
+        <title>2022 대구를 빛내는 SW 해커톤</title>
+        <meta name="description" content="2022 대구를 빛내는 SW 해커톤" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <Header />
 
-      <main className="container flex flex-col items-center justify-center max-w-2xl px-2 pt-12 pb-8 mx-auto">
+      <main className="container flex flex-col items-center justify-center max-w-2xl px-2 pt-8 pb-8 mx-auto gap-4">
         <form
           className="flex flex-col w-full max-w-lg gap-4"
           onSubmit={handleSubmit(onSubmit)}
@@ -316,7 +382,7 @@ const Apply = () => {
               </p>
             </div>
             <div>
-              <label htmlFor="teamName" className="text-zinc-800">
+              <label htmlFor="teamName" className="text-zinc-800 font-semibold">
                 이름<span className="text-red-500">*</span>
               </label>
               <input
@@ -337,7 +403,7 @@ const Apply = () => {
             </div>
 
             <div>
-              <label htmlFor="teamName" className="text-zinc-800">
+              <label htmlFor="teamName" className="text-zinc-800 font-semibold">
                 학번<span className="text-red-500">*</span>
               </label>
               <input
@@ -361,7 +427,7 @@ const Apply = () => {
             </div>
 
             <div>
-              <label htmlFor="teamName" className="text-zinc-800">
+              <label htmlFor="teamName" className="text-zinc-800 font-semibold">
                 전화번호<span className="text-red-500">*</span>{" "}
                 <span className="text-sm italic text-zinc-600">
                   (&quot;-&quot; 를 포함해서 적어주세요.)
@@ -388,14 +454,25 @@ const Apply = () => {
             </div>
 
             <div>
-              <label htmlFor="teamName" className="text-zinc-800">
-                깃헙 아이디<span className="text-red-500">*</span>{" "}
-                <span className="text-sm italic text-zinc-600">
-                  (링크가 아닌 아이디만 입력하세요)
-                </span>
+              <label htmlFor="teamName" className="text-zinc-800 font-semibold">
+                결과물 제출용 깃헙 링크<span className="text-red-500">*</span>
               </label>
+              <p className="text-sm text-zinc-700">
+                아래로 제출된 링크를 통해 결과물을 심사할 예정입니다.
+              </p>
+              <ol className="list-decimal px-5 text-sm text-zinc-700">
+                <li>
+                  팀장 계정으로 Github Repository를 public으로 생성하세요. (이름
+                  상관 없음)
+                </li>
+                <li>해당 repository의 URL을 아래 입력창으로 제출하세요.</li>
+                <li>
+                  리포에 첨부해야 할 요소들은 주제 공개와 동시에 공지할
+                  예정입니다.
+                </li>
+              </ol>
               <input
-                placeholder="예시) knu_cse_student"
+                placeholder="예시) https://github.com/knu_cse/2022-hackathon"
                 className={
                   "block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm" +
                   (errors.leader?.github?.message
