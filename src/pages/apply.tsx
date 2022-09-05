@@ -32,7 +32,7 @@ const memberSchema = z.object({
   student_number: z.string().regex(student_numberReg, {
     message: "학번 10자리를 정확하게 입력해주세요",
   }),
-  student_department: z.string().min(1, { message: "학과를 입력해주세요" }),
+  department: z.string().min(1, { message: "학과를 입력해주세요" }),
 });
 
 const schema = z.object({
@@ -209,17 +209,17 @@ const TeammateForm = ({
                 placeholder="팀원의 학과/부를 입력하세요."
                 className={
                   "block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm" +
-                  (errors.member1?.student_department?.message
+                  (errors.member1?.department?.message
                     ? " focus:ring-red-600 focus:border-red-600 ring-red-600 ring-2"
                     : "")
                 }
-                {...register("member1.student_department", {
+                {...register("member1.department", {
                   required: true,
                 })}
               />
-              {errors.member1?.student_department?.message && (
+              {errors.member1?.department?.message && (
                 <p className="pt-1 text-red-600">
-                  {errors.member1?.student_department?.message}
+                  {errors.member1?.department?.message}
                 </p>
               )}
             </>
@@ -230,17 +230,17 @@ const TeammateForm = ({
                 placeholder="팀원의 학과/부를 입력하세요."
                 className={
                   "block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm" +
-                  (errors.member2?.student_department?.message
+                  (errors.member2?.department?.message
                     ? " focus:ring-red-600 focus:border-red-600 ring-red-600 ring-2"
                     : "")
                 }
-                {...register("member2.student_department", {
+                {...register("member2.department", {
                   required: true,
                 })}
               />
-              {errors.member2?.student_department?.message && (
+              {errors.member2?.department?.message && (
                 <p className="pt-1 text-red-600">
-                  {errors.member2?.student_department?.message}
+                  {errors.member2?.department?.message}
                 </p>
               )}
             </>
@@ -251,17 +251,17 @@ const TeammateForm = ({
                 placeholder="팀원의 학과/부를 입력하세요."
                 className={
                   "block w-full p-2 mt-1 border rounded-md shadow-md placeholder:text-zinc-500 outline-0 border-zinc-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 sm:text-sm" +
-                  (errors.member3?.student_department?.message
+                  (errors.member3?.department?.message
                     ? " focus:ring-red-600 focus:border-red-600 ring-red-600 ring-2"
                     : "")
                 }
-                {...register("member3.student_department", {
+                {...register("member3.department", {
                   required: true,
                 })}
               />
-              {errors.member3?.student_department?.message && (
+              {errors.member3?.department?.message && (
                 <p className="pt-1 text-red-600">
-                  {errors.member3?.student_department?.message}
+                  {errors.member3?.department?.message}
                 </p>
               )}
             </>
