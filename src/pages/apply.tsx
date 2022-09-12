@@ -398,8 +398,8 @@ const Apply = () => {
                 <span className="text-sm text-red-500">*</span>
               </h3>
               <p className="text-sm text-zinc-600">
-                팀장은 반드시 컴퓨터학부 또는 연계/융합 전공 재학생이어야
-                합니다.
+                팀원 중 한 명 이상은 반드시 컴퓨터학부 또는 연계/융합 전공
+                재학생이어야 합니다.
               </p>
             </div>
             <div>
