@@ -10,7 +10,6 @@ import {
 } from "react-hook-form";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
-import axios from "axios";
 import { useRouter } from "next/router";
 import { phone_numberReg, student_numberReg } from "../utils/utils";
 import * as z from "zod";
@@ -528,14 +527,9 @@ const Apply = () => {
               )
             );
           })}
-          <Link
-            href="/success"
-            // onClick={() => console.error(errors)}
-          >
-            <a className="flex justify-center w-full max-w-4xl py-4 text-xl font-bold text-black transition-colors duration-300 ease-in-out bg-yellow-400 rounded-md shadow-2xl cursor-pointer md:py-4 md:text-3xl hover:bg-yellow-600 hover:text-zinc-800">
-              지원하기
-            </a>
-          </Link>
+          <button className="flex justify-center w-full max-w-4xl py-4 text-xl font-bold text-black transition-colors duration-300 ease-in-out bg-yellow-400 rounded-md shadow-2xl cursor-pointer md:py-4 md:text-3xl hover:bg-yellow-600 hover:text-zinc-800">
+            유효성 검사하기
+          </button>
         </form>
       </main>
     </>

@@ -28,7 +28,7 @@ const Model: React.FC<ModalProps> = ({ setShowModal }) => {
   return (
     <div>
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-        <div className="relative flex flex-col items-center justify-center w-full max-w-2xl px-6 pt-12 pb-6 mx-auto overflow-hidden bg-white rounded-md shadow-2xl">
+        <div className="relative flex flex-col items-center justify-center w-full max-w-2xl px-6 pt-12 pb-6 mx-4 overflow-hidden bg-white rounded-md shadow-2xl">
           <div
             className="absolute p-2 transition-colors duration-300 ease-out rounded-full cursor-pointer right-6 top-6 w-fit h-fit hover:bg-gray-300"
             onClick={() => {
@@ -56,6 +56,34 @@ const Model: React.FC<ModalProps> = ({ setShowModal }) => {
                 그래도 지원 페이지 보러 가기
               </a>
             </Link>
+            <div className="flex flex-row gap-2 mt-2">
+              <Link
+                href="/success"
+                // onClick={() => console.error(errors)}
+              >
+                <a
+                  className="flex justify-center w-full max-w-4xl py-4 text-lg font-bold text-black transition-colors duration-300 ease-in-out bg-yellow-400 rounded-md cursor-pointer md:py-4 hover:bg-yellow-600 hover:text-zinc-800"
+                  onClick={() => {
+                    document.body.style.overflow = "unset";
+                  }}
+                >
+                  지원 성공 페이지 가기
+                </a>
+              </Link>
+              <Link
+                href="/error"
+                // onClick={() => console.error(errors)}
+              >
+                <a
+                  className="flex justify-center w-full max-w-4xl py-4 text-lg font-bold text-black transition-colors duration-300 ease-in-out bg-yellow-400 rounded-md cursor-pointer md:py-4 hover:bg-yellow-600 hover:text-zinc-800"
+                  onClick={() => {
+                    document.body.style.overflow = "unset";
+                  }}
+                >
+                  지원 실패 페이지 가기
+                </a>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

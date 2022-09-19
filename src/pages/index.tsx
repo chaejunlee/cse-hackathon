@@ -57,12 +57,12 @@ const Home: NextPage = () => {
 
       <Header />
       <main className="flex flex-col items-center justify-center max-w-2xl gap-4 px-2 pt-8 mx-auto overflow-hidden">
-        <section className="container mx-auto overflow-hidden border-2 aspect-[7.1/10] rounded-xl border-zinc-300">
+        <section className="mx-auto overflow-hidden border-2 rounded-xl border-zinc-300">
           <Image
             src="/poster.jpeg"
             alt="hackathon poster"
-            width="5000"
-            height="7076"
+            width="3840"
+            height="2592"
           />
         </section>
         <section className="flex flex-col w-full gap-4 mx-2">
