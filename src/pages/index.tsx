@@ -3,7 +3,8 @@ import Head from "next/head";
 import Header from "../components/header";
 import Button from "../components/button";
 import Image from "next/image";
-import { lazy } from "react";
+import Modal from "../components/modal";
+import { lazy, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
 
@@ -39,6 +40,7 @@ function CurrentlyEnrolledPeople({
 }
 
 const Home: NextPage = () => {
+  const [showModal, setShowModal] = useState(false);
   const { isLoading, data } = useQuery<teamDataProps>(["getData"], () =>
     axios.get("api/status").then((res) => {
       return res.data;
@@ -47,14 +49,8 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <Head>
-        <title>2022 대구를 빛내는 SW 해커톤</title>
-        <meta name="description" content="2022년 대구를 빛내는 SW 해커톤" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <Header />
-      <main className="flex flex-col items-center justify-center max-w-2xl gap-4 mx-auto pt-8 px-2">
+      <main className="flex flex-col items-center justify-center max-w-2xl gap-4 mx-auto pt-8 px-2 h-screen overflow-hidden">
         <section className="container aspect-[7.1/10] mx-auto rounded-xl overflow-hidden border-zinc-300 border-2">
           <Image
             src="/poster.jpeg"
@@ -135,7 +131,14 @@ const Home: NextPage = () => {
         </a>
       </footer>
 
-      <Button>지원하기</Button>
+      <Button
+        handleClick={() => {
+          setShowModal((prev) => !prev);
+        }}
+      >
+        지원이 마감되었습니다.
+      </Button>
+      {showModal && <Modal setShowModal={setShowModal} />}
     </>
   );
 };

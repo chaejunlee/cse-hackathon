@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import { phone_numberReg, student_numberReg } from "../utils/utils";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 
 const leaderSchema = z.object({
   name: z.string().min(1, { message: "이름을 입력해주세요" }),
@@ -67,7 +68,7 @@ const TeammateForm = ({
           </h3>
         </div>
         <div>
-          <label htmlFor="teamName" className="text-zinc-800 font-semibold">
+          <label htmlFor="teamName" className="font-semibold text-zinc-800">
             이름<span className="text-red-500">*</span>
           </label>
           {numOfTeammates === 1 && (
@@ -129,7 +130,7 @@ const TeammateForm = ({
           )}
         </div>
         <div>
-          <label htmlFor="teamName" className="text-zinc-800 font-semibold">
+          <label htmlFor="teamName" className="font-semibold text-zinc-800">
             학번<span className="text-red-500">*</span>
           </label>
           {numOfTeammates === 1 && (
@@ -200,7 +201,7 @@ const TeammateForm = ({
           )}
         </div>
         <div>
-          <label htmlFor="teamName" className="text-zinc-800 font-semibold">
+          <label htmlFor="teamName" className="font-semibold text-zinc-800">
             학과/부<span className="text-red-500">*</span>
           </label>
           {numOfTeammates === 1 && (
@@ -285,7 +286,7 @@ const Apply = () => {
     resolver: zodResolver(schema),
   });
   const [numOfTeammates, setNumOfTeammates] = useState<number>(1);
-  console.log("numOfTeammates >> ", numOfTeammates);
+  // console.log("numOfTeammates >> ", numOfTeammates);
   const router = useRouter();
   const onSubmit: SubmitHandler<formProps> = (data) => {
     const formattedData = {
@@ -302,19 +303,23 @@ const Apply = () => {
         { ...data?.member3 },
       ].filter((_, index) => index <= numOfTeammates - 1),
     };
-    console.log("formattedData >> ", formattedData);
+    // console.log("formattedData >> ", formattedData);
+
+    /*
     axios
       .post("/api/apply", formattedData)
       .then(() => router.push("/success"))
       .catch(() => router.push("/error"));
+      */
+    router.push("/success");
   };
 
   const onSubmitInvalid: SubmitErrorHandler<formProps> = (errors) => {
-    console.error("errors >> ", errors);
+    // console.error("errors >> ", errors);
   };
 
   useEffect(() => {
-    console.log("cleared");
+    // console.log("cleared");
     clearErrors();
     for (let i = 0; i < 3 - (numOfTeammates - 1); i++) {
       resetField(`member${3 - i}` as any);
@@ -331,7 +336,7 @@ const Apply = () => {
 
       <Header />
 
-      <main className="container flex flex-col items-center justify-center max-w-2xl px-2 pt-8 pb-8 mx-auto gap-4">
+      <main className="container flex flex-col items-center justify-center max-w-2xl gap-4 px-2 pt-8 pb-8 mx-auto">
         <form
           className="flex flex-col w-full max-w-lg gap-4"
           onSubmit={handleSubmit(onSubmit, onSubmitInvalid)}
@@ -403,7 +408,7 @@ const Apply = () => {
               </p>
             </div>
             <div>
-              <label htmlFor="teamName" className="text-zinc-800 font-semibold">
+              <label htmlFor="teamName" className="font-semibold text-zinc-800">
                 이름<span className="text-red-500">*</span>
               </label>
               <input
@@ -424,7 +429,7 @@ const Apply = () => {
             </div>
 
             <div>
-              <label htmlFor="teamName" className="text-zinc-800 font-semibold">
+              <label htmlFor="teamName" className="font-semibold text-zinc-800">
                 학번<span className="text-red-500">*</span>
               </label>
               <input
@@ -448,7 +453,7 @@ const Apply = () => {
             </div>
 
             <div>
-              <label htmlFor="teamName" className="text-zinc-800 font-semibold">
+              <label htmlFor="teamName" className="font-semibold text-zinc-800">
                 전화번호<span className="text-red-500">*</span>{" "}
                 <span className="text-sm italic text-zinc-600">
                   (&quot;-&quot; 를 포함해서 적어주세요.)
@@ -475,13 +480,13 @@ const Apply = () => {
             </div>
 
             <div>
-              <label htmlFor="teamName" className="text-zinc-800 font-semibold">
+              <label htmlFor="teamName" className="font-semibold text-zinc-800">
                 결과물 제출용 깃헙 링크<span className="text-red-500">*</span>
               </label>
               <p className="text-sm text-zinc-700">
                 아래로 제출된 링크를 통해 결과물을 심사할 예정입니다.
               </p>
-              <ol className="list-decimal px-5 text-sm text-zinc-700">
+              <ol className="px-5 text-sm list-decimal text-zinc-700">
                 <li>
                   팀장 계정으로 Github Repository를 public으로 생성하세요. (이름
                   상관 없음)
@@ -523,12 +528,14 @@ const Apply = () => {
               )
             );
           })}
-          <button
-            className="flex justify-center w-full max-w-4xl py-4 text-xl font-bold text-black transition-colors duration-300 ease-in-out bg-yellow-400 rounded-md shadow-2xl cursor-pointer md:py-4 md:text-3xl hover:bg-yellow-600 hover:text-zinc-800"
+          <Link
+            href="/success"
             // onClick={() => console.error(errors)}
           >
-            지원하기
-          </button>
+            <a className="flex justify-center w-full max-w-4xl py-4 text-xl font-bold text-black transition-colors duration-300 ease-in-out bg-yellow-400 rounded-md shadow-2xl cursor-pointer md:py-4 md:text-3xl hover:bg-yellow-600 hover:text-zinc-800">
+              지원하기
+            </a>
+          </Link>
         </form>
       </main>
     </>
