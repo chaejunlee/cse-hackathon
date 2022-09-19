@@ -38,15 +38,14 @@ const Success = () => {
         <h2 className="text-3xl font-bold md:text-5xl text-zinc-100">
           신청이 완료되었습니다!
         </h2>
-        <div className="flex flex-col items-center text-2xl justify-center gap-4">
-          <p className="text-zinc-300 text-center">
+        <div className="flex flex-col items-center justify-center gap-4 text-2xl">
+          <p className="text-center text-zinc-300">
             팀장님께서는 오픈톡방으로
             <br />
             입장해주세요.
           </p>
           <a
-            className="px-4 py-2 rounded-md text-black font-bold bg-yellow-300 text-base"
-            href="https://open.kakao.com/o/g0F7sPye"
+            className="px-4 py-2 text-base font-bold text-black bg-yellow-300 rounded-md"
             target="_blank"
             rel="noopener noreferrer"
           >
