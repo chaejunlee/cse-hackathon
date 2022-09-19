@@ -4,7 +4,7 @@ import Header from "../components/header";
 import Button from "../components/button";
 import Image from "next/image";
 import Modal from "../components/modal";
-import { lazy, useEffect, useState } from "react";
+import { lazy, useState } from "react";
 import { useQuery } from "react-query";
 import axios from "axios";
 
@@ -49,9 +49,15 @@ const Home: NextPage = () => {
 
   return (
     <>
+      <Head>
+        <title>2022 대구를 빛내는 SW 해커톤</title>
+        <meta name="description" content="2022 대구를 빛내는 SW 해커톤" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <Header />
-      <main className="flex flex-col items-center justify-center max-w-2xl gap-4 mx-auto pt-8 px-2 h-screen overflow-hidden">
-        <section className="container aspect-[7.1/10] mx-auto rounded-xl overflow-hidden border-zinc-300 border-2">
+      <main className="flex flex-col items-center justify-center max-w-2xl gap-4 px-2 pt-8 mx-auto overflow-hidden">
+        <section className="container mx-auto overflow-hidden border-2 aspect-[7.1/10] rounded-xl border-zinc-300">
           <Image
             src="/poster.jpeg"
             alt="hackathon poster"
@@ -61,7 +67,7 @@ const Home: NextPage = () => {
         </section>
         <section className="flex flex-col w-full gap-4 mx-2">
           <div className="flex flex-row gap-4 md:flex-row">
-            <div className="flex flex-col items-center justify-center w-full gap-1 py-4 mx-auto rounded-md  bg-white/70 backdrop-blur-sm text-zinc-500">
+            <div className="flex flex-col items-center justify-center w-full gap-1 py-4 mx-auto rounded-md bg-white/70 backdrop-blur-sm text-zinc-500">
               <div className="flex flex-col gap-2 mx-auto md:flex-row">
                 <div className="flex flex-col items-center gap-4 text-xl font-medium text-zinc-800">
                   <CurrentlyEnrolledTeam
@@ -104,7 +110,7 @@ const Home: NextPage = () => {
                   speed={3}
                 />
               </div>
-              <div className="flex flex-col items-center text-sm justify-center italic md:flex-row text-zinc-500">
+              <div className="flex flex-col items-center justify-center text-sm italic md:flex-row text-zinc-500">
                 <p className="block md:inline w-fit">기대 상금 공식</p>
                 <p className="block md:inline w-fit font-extralight">
                   (전체 상금, 1천만원) / (지원 팀 수)
@@ -133,7 +139,8 @@ const Home: NextPage = () => {
 
       <Button
         handleClick={() => {
-          setShowModal((prev) => !prev);
+          setShowModal(true);
+          document.body.style.overflow = "hidden";
         }}
       >
         지원이 마감되었습니다.
