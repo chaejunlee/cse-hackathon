@@ -1,138 +1,86 @@
-# Create T3 App
+# 2022 대구를 빛내는 SW 해커톤
 
-This is an app bootstrapped according to the [init.tips](https://init.tips) stack, also known as the T3-Stack.
+"2022 대구를 빛내는 SW 해커톤"은 경북대학교 컴퓨터학부에서 주관한 해커톤입니다.
 
-## Why are there `.js` files in here?
+## 사이트 개관
 
-As per [T3-Axiom #3](https://github.com/t3-oss/create-t3-app/tree/next#3-typesafety-isnt-optional), we take typesafety as a first class citizen. Unfortunately, not all frameworks and plugins support TypeScript which means some of the configuration files have to be `.js` files.
+<div style="max-width:800px;margin-inline:auto">
 
-We try to emphasize that these files are javascript for a reason, by explicitly declaring its type (`cjs` or `mjs`) depending on what's supported by the library it is used by. Also, all the `js` files in this project are still typechecked using a `@ts-check` comment at the top.
+![page_overview](public/page_screen.png)
 
-## What's next? How do I make an app with this?
+</div>
 
-We try to keep this project as simple as possible, so you can start with the most basic configuration and then move on to more advanced configuration.
+<div style="max-width:800px;margin-inline:auto;display:grid;grid-template-columns:1fr 1fr;">
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+![screen_overview](public/screen_overview.png)
 
-- [Next-Auth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [TailwindCSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io) (using @next version? [see v10 docs here](https://alpha.trpc.io))
+![onbutton_pressed](public/onbutton_pressed.png)
 
-Also checkout these awesome tutorials on `create-t3-app`.
+![form_screen_1](public/form_screen_1.png)
 
-- [Build a Blog With the T3 Stack - tRPC, TypeScript, Next.js, Prisma & Zod](https://www.youtube.com/watch?v=syEWlxVFUrY)
-- [Build a Live Chat Application with the T3 Stack - TypeScript, Tailwind, tRPC](https://www.youtube.com/watch?v=dXRRY37MPuk)
-- [Build a full stack app with create-t3-app](https://www.nexxel.dev/blog/ct3a-guestbook)
-- [A first look at create-t3-app](https://dev.to/ajcwebdev/a-first-look-at-create-t3-app-1i8f)
+![form_screen_2](public/form_screen_2.png)
 
-## How do I deploy this?
+![form_screen_3](public/form_screen_3.png)
 
-### Vercel
+![form_success](public/form_success.png)
 
-We recommend deploying to [Vercel](https://vercel.com/?utm_source=t3-oss&utm_campaign=oss). It makes it super easy to deploy NextJs apps.
+</div>
 
-- Push your code to a GitHub repository.
-- Go to [Vercel](https://vercel.com/?utm_source=t3-oss&utm_campaign=oss) and sign up with GitHub.
-- Create a Project and import the repository you pushed your code to.
-- Add your environment variables.
-- Click **Deploy**
-- Now whenever you push a change to your repository, Vercel will automatically redeploy your website!
+## 지원 폼에 대한 결과
 
-### Docker
+- 해커톤 기획 당시 잡은 지원 규모는 약 50팀의 180명이었습니다.
+- 접수 기간은 9월 05일 (월) ~ 9월 19일 (월)로 14일이었습니다.
+- 14일 접수 기간 동안 총 70팀, 221명이 해커톤에 지원해주었습니다.
+- 접수 기간 동안 지원자분들께서 데이터를 잘못 입력하신 적은 있었지만 접수 중 데이터에는 문제가 발생하지는 않았습니다.
 
-You can also dockerize this stack and deploy a container.
+### 프로젝트에 쓴 노력
 
-1. In your [next.config.mjs](./next.config.mjs), add the `output: "standalone"` option to your config.
-2. Create a `.dockerignore` file with the following contents:
-   <details>
-   <summary>.dockerignore</summary>
+- `create-t3-app`을 이용해 프로젝트를 구성했습니다.
+  - `typescript`를 효율적으로 사용하기 위해
+  - `vercel`을 통한 편리한 배포를 위해
+- `zod`와 `react-hook-form`을 사용하였습니다.
+  - 오류 없는 폼을 구성하기 위해
+- `tailwindcss`를 사용했습니다.
+  - 쉽고 간단하면서 정확한 **css**를 사용하기 위해
 
-   ```
-   Dockerfile
-   .dockerignore
-   node_modules
-   npm-debug.log
-   README.md
-   .next
-   .git
-   ```
+### Acquisition Overview
 
-  </details>
+<div style="max-width:800px;margin-inline:auto">
 
-3. Create a `Dockerfile` with the following contents:
-   <details>
-   <summary>Dockerfile</summary>
+![Acquisition Overview](/public/acquisition_overview.png)
 
-   ```Dockerfile
-   # Install dependencies only when needed
-   FROM node:16-alpine AS deps
-   # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-   RUN apk add --no-cache libc6-compat
-   WORKDIR /app
+</div>
 
-   # Install dependencies based on the preferred package manager
-   COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
-   RUN \
-      if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-      elif [ -f package-lock.json ]; then npm ci; \
-      elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i; \
-      else echo "Lockfile not found." && exit 1; \
-      fi
+#### 결과
 
+총 **533**명이 해커톤 지원 폼에 접속하였습니다.
 
-   # Rebuild the source code only when needed
-   FROM node:16-alpine AS builder
-   WORKDIR /app
-   COPY --from=deps /app/node_modules ./node_modules
-   COPY . .
+#### 채널 별 분석
 
-   # Next.js collects completely anonymous telemetry data about general usage.
-   # Learn more here: https://nextjs.org/telemetry
-   # Uncomment the following line in case you want to disable telemetry during the build.
-   # ENV NEXT_TELEMETRY_DISABLED 1
+- 외부 사이트에서 링크를 타고 넘어온 사람(Referral)의 수는 **321**명으로 가장 많은 비중(**60%**)을 차지했습니다.
+- 그 다음으로 직접 사이트의 주소를 치고 들어온 사람(Direct)의 수는 **194**명(**36%**)을 기록했습니다.
+- 서치 엔진을 타고 넘어온 사람(Organic Search)의 수는 **14**명(**3%**)이었습니다.
+  - 서치 엔진에 노출시킨 적이 없었는데 어떻게 해당 지표가 기록되었는지 잘 모르겠습니다. 나중에 따로 찾아봐야겠습니다.
+- 인스타그램 등의 SNS를 통해서 접속한 사람의 수는 **4**명(**1%**)이었습니다.
+  - SNS 채널을 통한 광고는 크게 효과가 없는 것 같습니다.
 
-   RUN yarn build
+### Engagement Overview
 
-   # If using npm comment out above and use below instead
-   # RUN npm run build
+<div style="max-width:800px;margin-inline:auto">
 
-   # Production image, copy all the files and run next
-   FROM node:16-alpine AS runner
-   WORKDIR /app
+![Engagement Overview](/public/engagement_overview.png)
 
-   ENV NODE_ENV production
-   # Uncomment the following line in case you want to disable telemetry during runtime.
-   # ENV NEXT_TELEMETRY_DISABLED 1
+![Total Views](/public/total_views.png)
 
-   RUN addgroup --system --gid 1001 nodejs
-   RUN adduser --system --uid 1001 nextjs
+</div>
 
-   # You only need to copy next.config.js if you are NOT using the default configuration
-   # COPY --from=builder /app/next.config.js ./
-   COPY --from=builder /app/public ./public
-   COPY --from=builder /app/package.json ./package.json
+#### 결과
 
-   # Automatically leverage output traces to reduce image size
-   # https://nextjs.org/docs/advanced-features/output-file-tracing
-   COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-   COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-
-   USER nextjs
-
-   EXPOSE 3000
-
-   ENV PORT 3000
-
-   CMD ["node", "server.js"]
-   ```
-
-  </details>
-
-4. You can now build an image to deploy yourself, or use a PaaS such as [Railway's](https://railway.app) automated [Dockerfile deployments](https://docs.railway.app/deploy/dockerfiles) to deploy your app.
-
-## Useful resources
-
-Here are some resources that we commonly refer to:
-
-- [Protecting routes with Next-Auth.js](https://next-auth.js.org/configuration/nextjs#unstable_getserversession)
+- 평균 참여 시간은 **1분 20초**였습니다.
+  - 다른 지표에서는 평균 참여 시간이 **5분** 정도로 기록되었습니다.
+  - **1분 20초**는 폼을 다 작성하기에는 적은 시간이라고 생각되는 수치입니다.
+  - 아마도 랜딩 페이지의 시간과 전체 폼 작성 시간의 평균으로 **1분 20초**라는 값이 나온 것 같습니다.
+- 유저당 참여한 세션은 **1.3회**였습니다.
+  - 접속한 모든 사람이 1번 이상 참여한 것을 알 수 있습니다.
+- 총 조회 수는 **2,523회**였고 총 이벤트 수는 **6,415회**였습니다.
+  - 이렇게 큰 수는 처음이라 기쁩니다.
