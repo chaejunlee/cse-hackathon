@@ -22,5 +22,8 @@ export default defineNextConfig({
         destination: process.env.NEXT_PUBLIC_DB_URL + "/:path*"
       }
     ]
+  },
+  images: {
+    domains: ["github.com"]
   }
 });

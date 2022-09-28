@@ -56,7 +56,7 @@ const Home: NextPage = () => {
       </Head>
 
       <Header />
-      <main className="flex flex-col items-center justify-center max-w-2xl gap-4 px-2 pt-8 mx-auto overflow-hidden">
+      <main className="flex flex-col items-center justify-center max-w-2xl gap-4 px-2 pt-4 mx-auto overflow-hidden">
         <section className="mx-auto overflow-hidden border-2 rounded-xl border-zinc-300">
           <Image
             src="/poster.jpeg"

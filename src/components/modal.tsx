@@ -30,7 +30,7 @@ const Model: React.FC<ModalProps> = ({ setShowModal }) => {
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
         <div className="relative flex flex-col items-center justify-center w-full max-w-2xl px-6 pt-12 pb-6 mx-4 overflow-hidden bg-white rounded-md shadow-2xl">
           <div
-            className="absolute p-2 transition-colors duration-300 ease-out rounded-full cursor-pointer right-6 top-6 w-fit h-fit hover:bg-gray-300"
+            className="absolute p-2 transition-colors duration-300 ease-out rounded-full cursor-pointer right-4 top-4 w-fit h-fit hover:bg-gray-300"
             onClick={() => {
               setShowModal(false);
               document.body.style.overflow = "unset";
@@ -38,7 +38,7 @@ const Model: React.FC<ModalProps> = ({ setShowModal }) => {
           >
             <XIcon />
           </div>
-          <div className="flex flex-col justify-center w-full h-full p-4 overflow-hidden">
+          <div className="flex flex-col justify-center w-full h-full overflow-hidden">
             <h2 className="text-2xl font-bold">
               해커톤 지원이 마감되었습니다.
             </h2>
@@ -62,12 +62,12 @@ const Model: React.FC<ModalProps> = ({ setShowModal }) => {
                 // onClick={() => console.error(errors)}
               >
                 <a
-                  className="flex justify-center w-full max-w-4xl py-4 text-lg font-bold text-black transition-colors duration-300 ease-in-out bg-yellow-400 rounded-md cursor-pointer md:py-4 hover:bg-yellow-600 hover:text-zinc-800"
+                  className="flex justify-center w-full max-w-4xl py-4 text-lg font-semibold text-black transition-colors duration-300 ease-in-out bg-yellow-400 rounded-md cursor-pointer md:py-4 hover:bg-yellow-600 hover:text-zinc-800 text-center"
                   onClick={() => {
                     document.body.style.overflow = "unset";
                   }}
                 >
-                  지원 성공 페이지 가기
+                  지원 성공 페이지
                 </a>
               </Link>
               <Link
@@ -75,12 +75,12 @@ const Model: React.FC<ModalProps> = ({ setShowModal }) => {
                 // onClick={() => console.error(errors)}
               >
                 <a
-                  className="flex justify-center w-full max-w-4xl py-4 text-lg font-bold text-black transition-colors duration-300 ease-in-out bg-yellow-400 rounded-md cursor-pointer md:py-4 hover:bg-yellow-600 hover:text-zinc-800"
+                  className="flex justify-center w-full max-w-4xl py-4 text-lg font-semibold text-black transition-colors duration-300 ease-in-out bg-yellow-400 rounded-md cursor-pointer md:py-4 hover:bg-yellow-600 hover:text-zinc-800 text-center"
                   onClick={() => {
                     document.body.style.overflow = "unset";
                   }}
                 >
-                  지원 실패 페이지 가기
+                  지원 실패 페이지
                 </a>
               </Link>
             </div>
