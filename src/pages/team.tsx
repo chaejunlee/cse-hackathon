@@ -441,7 +441,7 @@ const Team = () => {
         <title>해커톤 참여 명단</title>
       </Head>
       <Header />
-      <main className="flex flex-col items-center justify-center max-w-2xl gap-4 px-2 pt-4 mx-auto">
+      <main className="flex flex-col items-center justify-center max-w-2xl gap-4 px-4 pt-4 mx-auto">
         <h1 className="font-bold text-4xl text-center pt-8 text-white">
           해커톤 제출 명단
         </h1>
