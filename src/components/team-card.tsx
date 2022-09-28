@@ -4,19 +4,19 @@ import { TeamCardType } from "../pages/team";
 
 const TeamCard = ({ props }: { props: TeamCardType[] }) => {
   return (
-    <ol className="grid w-full gap-4 mx-auto sm:grid-cols-2 lg:grid-cols-1">
+    <ol className="grid w-full gap-4 mx-auto sm:grid-cols-2 lg:grid-cols-2">
       {props.map((item) => {
         const profile_pic = item.github.split("/")[3];
         return (
           <li
             key={item.id}
-            className="w-full overflow-hidden transition-transform ease-out border-4 border-zinc-800 md:hover:scale-105 rounded-xl"
+            className="relative w-full transition-transform ease-out md:hover:scale-105"
           >
-            <div className="relative flex flex-col h-full bg-white/70 backdrop-blur-sm lg:flex-row">
-              <div className="absolute z-20 px-2 py-3 font-bold bg-yellow-400 left-4 rounded-b-md">
+            <div className="relative flex flex-col h-full overflow-hidden border-4 bg-white/70 backdrop-blur-sm lg:flex-row border-zinc-800 rounded-xl">
+              <div className="absolute z-20 px-2 py-3 font-bold bg-yellow-400 rounded-b-lg left-4">
                 {item.id}
               </div>
-              <div className="relative object-cover w-full border-b-4 bg-zinc-300 border-zinc-800 md:aspect-square lg:border-r-4 lg:border-b-0 aspect-video lg:w-64 shrink-0">
+              <div className="relative object-cover w-full border-b-4 bg-zinc-300 border-zinc-800 md:aspect-square lg:border-r-4 lg:border-b-0 aspect-video lg:w-52 shrink-0">
                 <Image
                   src={`https://github.com/${profile_pic}.png`}
                   alt={`${item.github.split("/")[3]}_profile`}

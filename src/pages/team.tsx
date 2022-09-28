@@ -441,21 +441,21 @@ const Team = () => {
         <title>해커톤 참여 명단</title>
       </Head>
       <Header />
-      <main className="flex flex-col items-center justify-center max-w-2xl gap-4 px-4 pt-4 mx-auto">
-        <h1 className="font-bold text-4xl text-center pt-8 text-white">
+      <main className="flex flex-col items-center justify-center max-w-6xl gap-4 px-2 pt-4 mx-auto md:px-8">
+        <h1 className="pt-8 text-4xl font-bold text-center text-white">
           해커톤 제출 명단
         </h1>
-        <h2 className="font-bold text-2xl text-center pt-12 pb-8 text-white">
+        <h2 className="pt-12 pb-8 text-2xl font-bold text-center text-white">
           자유 주제 제출 팀
         </h2>
         <TeamCard props={Free} />
 
-        <h2 className="font-bold text-2xl text-center pt-12 pb-8 text-white">
+        <h2 className="pt-12 pb-8 text-2xl font-bold text-center text-white">
           특별 주제 제출 팀
         </h2>
         <TeamCard props={Special} />
 
-        <h2 className="font-bold text-2xl text-center pt-12 pb-8 text-white">
+        <h2 className="pt-12 pb-8 text-2xl font-bold text-center text-white">
           포기 팀
         </h2>
         <TeamCard props={Drop} />
